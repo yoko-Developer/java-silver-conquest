@@ -16,7 +16,6 @@
 ※ publicクラス名＝ファイル名
 
 ## 数値リテラル
-
 - 8進数：0〜7（先頭0）
 - 16進数：0x
 - _：先頭・末尾・記号の前後❌
@@ -56,7 +55,7 @@ mutable
 - StringBuilder：変更可（元のオブジェクトが変わる）
 
 ## 文字列まわり
-長さ
+s長さ
 - length()：文字数（例："abc".length() → 3）
 
 位置
@@ -97,12 +96,10 @@ false = アドレスが違う
 - new：新しい領域
 
 ## 値渡し（参照）
-
 - プリミティブ：値がコピーされる
 - 参照型：参照（アドレス）がコピーされる
 
 ## 配列
-
 - 1番目の要素の要素数は省略できない
   ```
   // ❌コンパイルエラー
@@ -125,14 +122,11 @@ false = アドレスが違う
 - for文：`i--` を使うことで、繰り上がってきた要素をもう一度チェックできる
 
 ## 演算子
-
 ![](img/99-3.jpg)
 
 ![](img/99-4.jpg)
 
-
 ## 比較
-
 equals()
 
 - String(override済み)：**値比較**
@@ -143,7 +137,7 @@ equals()
     | ==    | アドレスを見る（new してれば false）     | アドレスを見る（new してれば false）    |
     | .equals()     | 値を見る（同じなら true）     | アドレスを見る（new してれば false）   |
 
-### 「ぬるぽ」判定ルール
+## 「ぬるぽ」判定ルール
   - ⭐️.equals()：`.`の左側が実行主
 
     | 比較方法    | a の状態  | b の状態   |結果|
@@ -200,21 +194,19 @@ do while
 - `{}`あり：doとwhileの間に**何文書いてもOK**
 
 ## static
-
 - static -> クラスに属する（インスタンス不要）
-- ⭐️**staticから非staticは触れない**（アクセス不可！！）
+- ❌**staticから非staticは触れない**（アクセス不可！！）
 
-■ アクセス
+アクセス
 - static → static：⭕️
 - 非static(インスタンス) -> static：⭕️
 - static -> 非static(インスタンス)：❌ NG（this使えない）
 
-■ ポイント
+ポイント
 - static内ではインスタンスメンバに直接アクセス不可
 - staticは「クラス名.メンバ」で呼べる
 
 ## メンバアクセス
-
 - 参照.メソッド名(引数)：メソッド呼び出し
 - 参照.メソッド名：()がないとフィールド参照
 
@@ -223,47 +215,40 @@ do while
 - obj.name;       // フィールド
 
 ## ラッパー型
-
 - ボクシング：int → Integer（自動）
 - アンボクシング：Integer → int（自動）
 - nullをintにすると例外（NPE）
 
-
 ## 可変長引数(...)
-
 - 位置のルール： ... は必ず **型のすぐ後ろ** に書く（例：int... values）
 - 順番のルール： 他の引数と一緒に使うときは、**一番最後** に書く
 - 個数のルール： 1つのメソッドに可変長引数は **1つだけ** しか使えない
 
-
 ## オーバーロード
-
 条件
 - 引数の型・数・順番のいずれかが違う
 - 戻り値は関係ない（戻り値だけ違いはNG）
 - 引数だけで判定（修飾子・戻り値は関係ない）
 
 ## アクセス修飾子
-
 - コンストラクタを修飾するアクセス修飾子に制限なし
 
 ![](img/99-5.jpg)
 
 ## コンストラクタ(this)
-
 - this()：同じクラスの別コンストラクタ呼び出し
 - this()：同じクラス
 - super()：親クラス
 - ⭐️最初の1文のみOK
 
-■ ルール
+ルール
 - 1行目に書く（最重要）
 - 2行目以降は❌
 - this()：同じクラス
 - super()：親クラス
 
 ## record
-
+### データを保持するためだけのクラスを1行で、超シンプルに書くための仕組み
 - 不変クラス（immutable）※newが終わったあと、代入後は不変
 - フィールドは自動でfinal
 - コンストラクタ・getter・equalsなど自動生成
@@ -352,3 +337,103 @@ defaultメソッド
 子クラス
 - final / sealed / non-sealed のいずれか必須
 - ⭐️sealedの場合：permits 必須
+
+## 例外処理
+- throw：エラー発生（即停止）
+- throws：エラー出すかも宣言
+
+流れ
+メソッド呼ぶ → throw → catchに飛ぶ
+
+- throwされたら下の処理は実行されない
+- catch：上から順にチェック
+- finally：
+  - 必ず実行される（※強制終了除く）
+  - finallyに**return**があると割り込みする(catchのreturnより先に出力)
+- returnがなければ通常通り上から（割り込みなし）
+- try / finallyブロック：１つのみ記述可
+- catchブロック：複数記述可
+
+- エラー：`throw句`に宣言する必要なし
+
+- ネスト：内側から処理開始
+- 自作例外のサブクラス： 
+  - `java.lang.Exception` ：例外（チェック例外）必要条件
+  - `java.lang.RuntimeException`：実行時例外（非チェック例外）必須ではない
+
+## 例外の種類
+- IndexOutOfBoundsException：スーパークラス（配列、文字列、コレクション）
+- ArrayIndexOutOfBoundsException：配列（要素外アクセス）
+- StringIndexOutOfBoundsException：文字列（範囲外）
+- StackOverflowError：無限再帰
+- IllegalStateException：状態がおかしい
+- ExceptionInInitializerError：tatic初期化失敗
+
+ ```
+ Index系 → 範囲外
+ StackOverflow → 無限ループ（再帰）
+ IllegalState → 状態ミス
+ InitializerError → static初期化ミス
+ ```
+  ![](img/99-6.jpg)
+
+## マルチキャッチ
+### 1つの catch ブロックで複数の異なる例外をまとめて捕まえるための仕組み
+- `|`で区切る
+- 継承関係にある例外は同時に指定できない(例：Exception | RintimeException❌)
+- 変数は暗黙的にfinal（再代入不可）
+
+## try-with-resources
+### ファイルやデータベースなど「使い終わったら必ず閉じなければいけないもの（リソース）」を自動でお片付け（close）してくれる超便利な仕組み
+- try() にリソースを書く
+- 自動でcloseされる（finallyいらない）
+- AutoCloseableを実装している必要あり
+- → リソース自動クローズが目的（例外処理ではない）
+- `java.io.Closeable`インターフェース / `java.lang.AutoCloseable`インターフェースのいずれかを実装したクラス
+- try()の中
+→ `AutoCloseable` / `Closeable` のクラスだけOK
+
+書き方
+- カッコの中で「宣言」と「作成」をセットで記述する
+```
+try (型 変数 = new クラス()) {
+    処理
+}
+```
+
+```
+try (Scanner sc = new Scanner(System.in)) {
+    System.out.println(sc.nextLine());
+}
+```
+<br>
+
+- 外で先に作っておいた「変数」を、あとからカッコに入れる
+```
+クラス 変数 = new クラス();
+    try (変数) {
+        処理
+    }
+```
+
+```
+Scanner sc = new Scanner(System.in);
+
+try (sc) {  // ⭕ Java9以降
+}
+```
+
+※初期化必須
+
+※AutoCloseable系のみOK
+
+## 順番
+try-with-resources
+- 複数のリソース(a,b,c)を扱う場合：
+  - open：a→b→c
+  - close：c→b
+- 例外発生時
+  - close→catch→fainally
+
+try-catch
+- 例外発生→
