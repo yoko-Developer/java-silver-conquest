@@ -183,3 +183,34 @@
 24. ❌ シールクラス
 25. ❌ シールクラス（子クラス定義）
 26. ❌ シールクラス（子クラス定義）
+
+## 第6章
+
+1. ❌ try-catch
+2. ❌ try-catch-finally
+3. ❌ try-catch-finallyの順番
+4. ❌ try-catch-finallyの順番
+5. ❌ finallyがcatchより先
+6. ○ 例外：戻り値の上書き
+7. ○ 例外：戻り値の上書き
+8. ❌ try,catch,finallyの使用可能数
+9. ❌ try-catchネスト
+10. ❌ 自作例外
+11. ❌ チェック例外、非チェック例外
+12. ❌ エラー
+13. ❌ 種類選択：要素外アクセス
+14. ❌ 種類選択：ArrayList
+15. ❌ キャストと例外
+16. ○ ぬるぽ
+17. ❌ 再起呼び出し
+18. ❌ マルチキャッチ
+19. ❌ マルチキャッチ
+20. ❌ try-with-resources
+21. ❌ try-with-resources：必須の記述
+22. ❌ try-with-resources：書き方
+
+20260506
+
+23. ❌ tryリソースの順：片づけ(clese)は逆
+24. ❌ try-with-resources：close->catch->finally順
+25. ❌ tyy-catch
