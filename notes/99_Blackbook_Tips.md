@@ -25,13 +25,14 @@
 - 数字始まり：NG
   
 ## var
-右辺によって左辺のデータ型を推論できる場合のみ使用化
+- 右辺によって左辺のデータ型を推論できる場合のみ使用化
+- ローカル変数のみOK（フィールド不可）
+- 初期化必須（右辺から型推論）
+- 型推論はコンパイル時に行われる
 
 ⭐️初期化必須！！
 - ⭕️ `var a = 10;`
 - ⭕️ `var e = new ArrayList<>();` ：ダイヤモンド演算子の型情報がない場合は型推論(`Object`など)
-- 型推論：ローカル変数の宣言のみ可(フィールド不可)
-- 型推論：コンパイル時に行われる
 
 ## String
 オブジェクト生成時
@@ -88,12 +89,13 @@ replace(start, end, str) の数え方
 
 ## Stringの比較
 true = メモリ内にある文字列への参照を戻す
-- intern()：newしてもtrue
-- String a = "a"：ダブルクォートあり(コンスタントプール)
-- .equals()：値比較
+⭐️同じ値の場合
+- intern()：newしてもダブルクォートありのリテラルと比較ならtrue⭕️（intern()のみnewとリテラル比較）
+- String a = "a"：ダブルクォートあり(コンスタントプール)⭕️
+- .equals()：値比較⭕️
 
 false = アドレスが違う
-- new：新しい領域
+- new：新しい領域（どちらかがnewしていれば❌）
 
 ## 値渡し（参照）
 - プリミティブ：値がコピーされる
@@ -168,6 +170,22 @@ equals()：以下２つがなく、newしていればfalse！！
     - nullはfalse（例外にならない）
     - 無関係な型同士はコンパイルエラー
 
+## instanceof
+### 中身をチェックする
+- `obj instanceof A` ：objがA型 or サブクラスならtrue（型チェック）
+- `obj instanceof A b`：trueのときだけ b として使える（パターンマッチ）
+
+nullはfalse（例外にならない）
+```
+null instanceof String → false
+```
+
+無関係な型はコンパイルエラー
+```
+String s = "a";
+s instanceof Integer → ❌ コンパイルエラー
+```
+
 ## 分岐
 Swich
 - ❌使えないもの
@@ -232,8 +250,13 @@ do while
 
 ## アクセス修飾子
 - コンストラクタを修飾するアクセス修飾子に制限なし
-
 ![](img/99-5.jpg)
+
+- サブクラス宣言
+  - static：インナークラスのみ使用可
+  - private：インナークラスのみ使用可
+  - non-seale：シールクラスのサブクラスのみ使用可
+  - protected：クラス宣言で使用不可❌
 
 ## コンストラクタ(this)
 - this()：同じクラスの別コンストラクタ呼び出し
@@ -331,6 +354,7 @@ defaultメソッド
 2. フィールド変数
 
 ## sealedクラス（シールクラス）
+### 継承できるクラスをあらかじめ指名しておく仕組み
 - sealed：継承を制限するクラス（継承できるクラスを限定）
 - permits：継承できるクラスを指定
 
@@ -362,12 +386,20 @@ defaultメソッド
   - `java.lang.RuntimeException`：実行時例外（非チェック例外）必須ではない
 
 ## 例外の種類
+チェック例外（コンパイル時にチェック）
+- Exception：すべての例外の親
+- IOException：外部入出力（ファイル・通信）
+- SQLException：データベース関連
+
+非チェック例外（実行しないとわからない）
 - IndexOutOfBoundsException：スーパークラス（配列、文字列、コレクション）
 - ArrayIndexOutOfBoundsException：配列（要素外アクセス）
 - StringIndexOutOfBoundsException：文字列（範囲外）
-- StackOverflowError：無限再帰
 - IllegalStateException：状態がおかしい
-- ExceptionInInitializerError：tatic初期化失敗
+
+Error
+- StackOverflowError：無限再帰
+- ExceptionInInitializerError：static初期化失敗
 
  ```
  Index系 → 範囲外
@@ -431,9 +463,9 @@ try (sc) {  // ⭕ Java9以降
 try-with-resources
 - 複数のリソース(a,b,c)を扱う場合：
   - open：a→b→c
-  - close：c→b
+  - close：c→b→a
 - 例外発生時
-  - close→catch→fainally
+  - close→catch→fainally(finallyが最後)
 
-try-catch
-- 例外発生→
+## import文
+- ワイルドカード(`*`)：クラス名のみ使用可⭕️ / パッケージの途中は使用不可❌
