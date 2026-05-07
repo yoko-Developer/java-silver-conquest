@@ -25,7 +25,7 @@
 - 数字始まり：NG
   
 ## var
-- 右辺によって左辺のデータ型を推論できる場合のみ使用化
+- 右辺によって左辺のデータ型を推論できる場合のみ使用可
 - ローカル変数のみOK（フィールド不可）
 - 初期化必須（右辺から型推論）
 - 型推論はコンパイル時に行われる
@@ -56,12 +56,13 @@ mutable
 - StringBuilder：変更可（元のオブジェクトが変わる）
 
 ## 文字列まわり
-s長さ
+長さ
 - length()：文字数（例："abc".length() → 3）
 
 位置
 - charAt(i)：i番目の文字（0開始）
 - indexOf("a")：最初に見つかった位置（なければ-1）
+- indexOf()：開始位置(0から順番)
 
 切り出し
 - substring(a, b)：a以上b未満
@@ -79,23 +80,23 @@ s長さ
 反転
 - reverse()：abcde->edcba
 
-位置
-- indexOf()：開始位置(0から順番)
-
 replace(start, end, str) の数え方
 - 「文字そのもの」ではなく「文字の間の仕切り線」を数える
-- `start` は含めて、`end` は含めない（endの直前まで）s
+- `start` は含めて、`end` は含めない（endの直前まで）
 ![](img/99-2.jpg)
 
 ## Stringの比較
 true = メモリ内にある文字列への参照を戻す
 ⭐️同じ値の場合
 - intern()：newしてもダブルクォートありのリテラルと比較ならtrue⭕️（intern()のみnewとリテラル比較）
-- String a = "a"：ダブルクォートあり(コンスタントプール)⭕️
-- .equals()：値比較⭕️
-
+- String a = "a"：ダブルクォートあり（コンスタントプール）⭕️
+- .equals()：値比較（new無関係）⭕️⭐自作クラスは絶対Stringではないからfalse❌
 false = アドレスが違う
 - new：新しい領域（どちらかがnewしていれば❌）
+
+## StirngBuilder
+- .equals()：false❌（toStringを使うとtrue⭕️）
+- toString().equals()：文字列比較できる⭕️
 
 ## 値渡し（参照）
 - プリミティブ：値がコピーされる
@@ -172,19 +173,13 @@ equals()：以下２つがなく、newしていればfalse！！
 
 ## instanceof
 ### 中身をチェックする
-- `obj instanceof A` ：objがA型 or サブクラスならtrue（型チェック）
+- `obj instanceof A` ：obj が A or 子ならtrue（型チェック）
 - `obj instanceof A b`：trueのときだけ b として使える（パターンマッチ）
-
-nullはfalse（例外にならない）
-```
-null instanceof String → false
-```
-
-無関係な型はコンパイルエラー
-```
-String s = "a";
-s instanceof Integer → ❌ コンパイルエラー
-```
+- 無関係な型：コンパイルエラー
+- null：false（例外にならない）
+  ```
+  null instanceof String → false
+  ```
 
 ## 分岐
 Swich
@@ -193,15 +188,14 @@ Swich
   - float
   - double
   - boolean
-  - ⭐️caseの後ろ(finalならOK)
-  - 変数
-  - 型が違う(intで定義しているのにStringなど)
 
+caseの後ろ
 - ⭕️使えるもの（⭐️caseの後ろ）
   - リテラル
   - 定数 (finalがついた変数)
   - 定数式 (2*5など)
-
+- ❌使えないもの
+  - 普通の変数
 
 Swich式
 - defaultがないとコンパイルエラー
@@ -259,10 +253,10 @@ do while
   - protected：クラス宣言で使用不可❌
 
 ## コンストラクタ(this)
-- this()：同じクラスの別コンストラクタ呼び出し
-- this()：同じクラス
-- super()：親クラス
-- ⭐️最初の1文のみOK
+- new子() → 親 → 子 の順
+- super()：親コンストラクタ
+- this()：同じクラスの別コンストラクタ
+- this() / super() ：1行目のみ & どちらか1つだけ記述できる
 
 ルール
 - 1行目に書く（最重要）
