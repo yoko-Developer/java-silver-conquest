@@ -1,19 +1,55 @@
 ## mainメソッドの5つの鉄則
 ![](img/99-1.jpg)
-- public / static / void
-- main
-- String[] args（1つ）
 
-## javaコマンド
+## java / javac コマンド
+
 - javac：コンパイル（.java → .class）
-  `javac Hello.java`
+  javac Hello.java
 
 - java：実行（クラス名）
-  `java Hello`
+  java Hello
 
 ❌ java Hello.class
 
-※ publicクラス名＝ファイル名
+- ⭐依存関係があれば依存元のみ指定すればOK
+- -d：classファイルの出力先
+- -cp：classファイルを探す場所(classpath)
+
+package付きクラスの実行
+- java パッケージ名.クラス名
+
+  ```
+  例
+
+  package ex15;
+
+  javac -d build ex15/Sample.java ex15/Main.java
+  → build/ex15/Main.class ができる
+
+  java -cp build ex15.Main
+  → build を基準に ex15/Main.class を探して実行
+  ```
+
+順番
+
+① javac（コンパイル）
+→ ファイルパス指定
+
+- スラッシュ（/）必要
+- .java 必要
+
+例
+javac ex15/Main.java
+
+② java（実行）
+→ 完全修飾クラス名指定
+
+- package名.クラス名
+- スラッシュ不要
+- .class不要
+
+例
+java ex15.Main
 
 ## 数値リテラル
 - 8進数：0〜7（先頭0）
@@ -25,7 +61,7 @@
 - 数字始まり：NG
   
 ## var
-- 右辺によって左辺のデータ型を推論できる場合のみ使用化
+- 右辺によって左辺のデータ型を推論できる場合のみ使用可
 - ローカル変数のみOK（フィールド不可）
 - 初期化必須（右辺から型推論）
 - 型推論はコンパイル時に行われる
@@ -43,8 +79,13 @@
 
 <br>
 
-- String：不変なのでバッファなし
+- String：不変なのでバッファ(予備)なし
 - StringBuilder：16のバッファ(予備)を持っている
+
+## StringBuilder
+- append("a")：後ろに追加
+- toString()：Stringに変換
+- reverse()：反転
   
 ## mutable(可変) / imutable(不変)
 imutable
@@ -56,15 +97,17 @@ mutable
 - StringBuilder：変更可（元のオブジェクトが変わる）
 
 ## 文字列まわり
-s長さ
+長さ
 - length()：文字数（例："abc".length() → 3）
 
 位置
 - charAt(i)：i番目の文字（0開始）
 - indexOf("a")：最初に見つかった位置（なければ-1）
+- indexOf()：開始位置(0から順番)
 
 切り出し
 - substring(a, b)：a以上b未満
+- substring(a)：aから後ろを切り出し
 
 メソッドチェイン
 - substring(1, 3).replace("b", "c")：bcだけを抽出してその文字列だけを置換
@@ -79,23 +122,37 @@ s長さ
 反転
 - reverse()：abcde->edcba
 
-位置
-- indexOf()：開始位置(0から順番)
+連結
+- concat("x")：文字列を後ろに連結
+  "ab".concat("c") → "abc"
+
+  [注意]
+- Stringはimmutable（不変）
+- concatしても元は変わらない
+- null.concat(...) → NullPointerException
 
 replace(start, end, str) の数え方
 - 「文字そのもの」ではなく「文字の間の仕切り線」を数える
-- `start` は含めて、`end` は含めない（endの直前まで）s
-![](img/99-2.jpg)
+- `start` は含めて、`end` は含めない（endの直前まで）
+
+  ![](img/99-2.jpg)
+  
+  [注意]
+- Stringはimmutable（不変）
+- replaceしても元は変わらない
 
 ## Stringの比較
 true = メモリ内にある文字列への参照を戻す
 ⭐️同じ値の場合
 - intern()：newしてもダブルクォートありのリテラルと比較ならtrue⭕️（intern()のみnewとリテラル比較）
-- String a = "a"：ダブルクォートあり(コンスタントプール)⭕️
-- .equals()：値比較⭕️
-
+- String a = "a"：ダブルクォートあり（コンスタントプール）⭕️
+- .equals()：値比較（new無関係）⭕️⭐自作クラスは絶対Stringではないからfalse❌
 false = アドレスが違う
 - new：新しい領域（どちらかがnewしていれば❌）
+
+## StirngBuilder
+- .equals()：false❌（toStringを使うとtrue⭕️）
+- toString().equals()：文字列比較できる⭕️
 
 ## 値渡し（参照）
 - プリミティブ：値がコピーされる
@@ -172,38 +229,42 @@ equals()：以下２つがなく、newしていればfalse！！
 
 ## instanceof
 ### 中身をチェックする
-- `obj instanceof A` ：objがA型 or サブクラスならtrue（型チェック）
+- `obj instanceof A` ：obj が A or 子ならtrue（型チェック）
 - `obj instanceof A b`：trueのときだけ b として使える（パターンマッチ）
-
-nullはfalse（例外にならない）
-```
-null instanceof String → false
-```
-
-無関係な型はコンパイルエラー
-```
-String s = "a";
-s instanceof Integer → ❌ コンパイルエラー
-```
+- 無関係な型：コンパイルエラー
+- null：false（例外にならない）
+  ```
+  null instanceof String → false
+  ```
 
 ## 分岐
-Swich
+Switch
 - ❌使えないもの
   - long
   - float
   - double
   - boolean
-  - ⭐️caseの後ろ(finalならOK)
-  - 変数
-  - 型が違う(intで定義しているのにStringなど)
 
-- ⭕️使えるもの（⭐️caseの後ろ）
+caseの後ろ
+- ⭕️使えるもの
   - リテラル
-  - 定数 (finalがついた変数)
+  - final（定数）
   - 定数式 (2*5など)
+- ❌使えないもの
+  - 普通の変数
 
+  ```
+  ⭕️OK
+  final int a = 10;
+  case a:
+  ```
 
-Swich式
+  ```
+  ❌コンパイルエラー
+  int a = 10;
+  case a:
+  ```
+Switch式
 - defaultがないとコンパイルエラー
 - `{};`：セミコロンがないとコンパイルエラー
 
@@ -212,17 +273,24 @@ do while
 - `{}`あり：doとwhileの間に**何文書いてもOK**
 
 ## static
-- static -> クラスに属する（インスタンス不要）
-- ❌**staticから非staticは触れない**（アクセス不可！！）
-
 アクセス
+- static → クラスに属する（共有・インスタンス不要）
+- staticは「クラス名.メンバ」で呼べる
+- static内ではインスタンスメンバに直接アクセス不可❌
 - static → static：⭕️
 - 非static(インスタンス) -> static：⭕️
-- static -> 非static(インスタンス)：❌ NG（this使えない）
+- static → 非static(インスタンス)：❌（this使えない）→newすればOK
 
 ポイント
-- static内ではインスタンスメンバに直接アクセス不可
+- static変数は全インスタンスで共有
 - staticは「クラス名.メンバ」で呼べる
+- static ≠ 変更不可
+- 変更不可にしたい場合は final を使う
+
+  | 比較方法    | メモリの場所  | 場所イメージ| 書き換えたら |
+  | :--------: | :---------: | :-------: | :-------: |
+  | 普通の変数  | ヒープ（個別の住所） | 自分専用のノート| 自分だけ変わる |
+  | static変数  | メソッドエリア（共通の住所）   | 教室の黒板| 全員分が同時に変わる |
 
 ## メンバアクセス
 - 参照.メソッド名(引数)：メソッド呼び出し
@@ -242,31 +310,57 @@ do while
 - 順番のルール： 他の引数と一緒に使うときは、**一番最後** に書く
 - 個数のルール： 1つのメソッドに可変長引数は **1つだけ** しか使えない
 
-## オーバーロード
-条件
-- 引数の型・数・順番のいずれかが違う
-- 戻り値は関係ない（戻り値だけ違いはNG）
-- 引数だけで判定（修飾子・戻り値は関係ない）
-
 ## アクセス修飾子
+- public > protected > なし > private
+
+  | 修飾子       | 見える範囲              |
+  |:---------:|:------------------:|
+  | public    | 全部                 |
+  | protected | package + subclass |
+  | なし        | packageのみ          |
+  | private   | 自分だけ               |
+
+  ```
+  public
+  → どこからでもOK
+
+  protected
+  → 同じpackageならOK
+  → 違うpackageは「継承」が必要
+
+  なし（default/package private）
+  → 同じpackageだけOK
+
+  private
+  → 同じクラスだけOK
+  ```
+
+- トップレベルクラス（外側のクラス）で使える修飾子
+→ public または なし(default) のみ
+※ protected / private / static は不可（インナークラスでは使用可）
+
+- protected/private/static
+→ トップレベルクラスでは不可
+
 - コンストラクタを修飾するアクセス修飾子に制限なし
 ![](img/99-5.jpg)
 
 - サブクラス宣言
   - static：インナークラスのみ使用可
   - private：インナークラスのみ使用可
-  - non-seale：シールクラスのサブクラスのみ使用可
-  - protected：クラス宣言で使用不可❌
+  - non-sealed：シールクラスのサブクラスのみ使用可
+  - protected：トップクラス宣言で使用不可❌（インナークラスでは使用可能）※違うpackageでは「継承 + 子クラス経由」が必要
 
 ## コンストラクタ(this)
-- this()：同じクラスの別コンストラクタ呼び出し
-- this()：同じクラス
-- super()：親クラス
-- ⭐️最初の1文のみOK
+- `public class クラス名()`：クラス名ならコンストラクタ
+- new子() → 親 → 子 の順：new したら「親（super）」から順に生まれる
+- super()：親コンストラクタ
+- this()：同じクラスの別コンストラクタ
+- this() / super() ：1行目のみ & どちらか1つだけ記述できる
 
 ルール
-- 1行目に書く（最重要）
-- 2行目以降は❌
+- 1行目に書く（最重要）2行目以降は❌
+- this() / super()：一番最初に実行される
 - this()：同じクラス
 - super()：親クラス
 
@@ -306,6 +400,7 @@ record Person(String name, int age) {}
 
 ## インターフェース
 - 実体化（インスタンス化）不可 ❌
+- final不可 ❌
 - 多重実装OK ⭕️
 - メソッドは基本 public abstract（自動）
 - 「できること」（型）を定義するもの
@@ -317,11 +412,22 @@ defaultメソッド
 - 必要ならオーバーライド可能
 - Objectクラスのメソッド(`toString()` / `equals()` / `hashCode()`)の定義不可❌
 
+abstract class
+- final不可 ❌
+- abstractメソッド（中身なし）を持てる
+- 具象メソッド（中身あり）も持てる
+- abstract class自身もインスタンス化不可❌
+
+普通クラス（abstractなし）
+- abstractメソッドを残せない
+- 未実装メソッドは全部実装必要
+
 ## クラスの種類
 抽象クラス（abstract class）
-- インスタンス化できない
-- 抽象メソッド（中身なしの未完成メソッド）を持てる
-- 通常のメソッド（中身あり）も持てる
+- インターフェースの共通部分を定義する（インターフェースを実装するクラスが楽できる）
+- インスタンス化できない→サブクラスが必要
+- 抽象メソッド（中身なしの未完成メソッド）を持てる `;`中身がないので`{}`はない
+- 具象ソッド（中身あり）も持てる `{}`あり
 - フィールドも持てる
 - コンストラクタも持てる
 
@@ -331,36 +437,61 @@ defaultメソッド
 具象クラス
 - 普通のクラス（インスタンス化できる）
 - 抽象メソッドをすべて実装する必要がある
+
+## シグニチャ（signature）
+
+- メソッド名 + 引数リスト（型・数・順番）
+
+  ※戻り値は含まない❌
+
+例
+void test(int a)
+
+メソッド名：test
+引数：int
+
+→ シグニチャ = test(int)
   
 ##  オーバーライド（override）
+- シグニチャ：同じ
+- 実行されるメソッド：new側（実体）で決まる
+
+  ```
+  例
+  A a = new B();
+  → Bのoverrideメソッドが動く
+  ```
+
 - throws句：親より広げられない
 - 親クラスのメソッドを上書き
 - メソッド名：同じ
 - 引数：型・数・順番がすべて同じ
-- @Override アノテーション：付けられる（推奨）
 - 戻り値：同じ or サブクラス型（子クラスの型）
 - アクセス修飾子：子クラス ≥ 親クラス（子は親より強い）
 
 ##  オーバーロード（overload）
-- 同じクラス内でメソッドを複数定義
-- メソッド名：同じ
-- 引数：型・数・順番のどれかが違う
-- 戻り値だけ違う：NG
-- アノテーション不要
+- シグニチャ：違う
+- 引数違い：左側の型で判定
+- 引数の型・数・順番のいずれかが違う
+- 戻り値は関係ない（修飾子・戻り値だけ違いは関係ない）
 
 ## 優先順位
 変数
-1. ローカル変数
+1. ローカル変数（スコープ内）
 2. フィールド変数
 
 ## sealedクラス（シールクラス）
 ### 継承できるクラスをあらかじめ指名しておく仕組み
-- sealed：継承を制限するクラス（継承できるクラスを限定）
-- permits：継承できるクラスを指定
+- sealed：継承クラス制限（継承できるクラスを限定）
+- permits：継継承許可クラス指定
 
 子クラス
 - final / sealed / non-sealed のいずれか必須
-- ⭐️sealedの場合：permits 必須
+- 子がsealedの場合：子にモpermits 必須
+
+  ```
+  sealed class A permits B
+  ```
 
 ## 例外処理
 - throw：エラー発生（即停止）
@@ -387,7 +518,7 @@ defaultメソッド
 
 ## 例外の種類
 チェック例外（コンパイル時にチェック）
-- Exception：すべての例外の親
+- Exception：例外クラスの親
 - IOException：外部入出力（ファイル・通信）
 - SQLException：データベース関連
 
@@ -469,3 +600,16 @@ try-with-resources
 
 ## import文
 - ワイルドカード(`*`)：クラス名のみ使用可⭕️ / パッケージの途中は使用不可❌
+
+  パッケージ宣言の最下層（class）のみ指定可⭕️
+
+## コマンドライン引数
+- `""`は文字の区切り
+
+  ```
+  // java クラス名(Aクラスを動かせ)
+  java A "A B" A B
+
+  // 結果
+  // A BAB
+  ```
