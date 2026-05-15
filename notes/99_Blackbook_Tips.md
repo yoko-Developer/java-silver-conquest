@@ -4,7 +4,10 @@
 ## java / javac コマンド
 
 - javac：コンパイル（.java → .class）
-  javac Hello.java
+
+  `javac Hello.java`
+- javacで指定できるのはpublicなクラスのみ（同じクラス名であること）
+- 1つのソースファイルに**publicは1つ**のみ、それ以外の複数クラスの記述可
 
 - java：実行（クラス名）
   java Hello
@@ -52,6 +55,8 @@ javac ex15/Main.java
 java ex15.Main
 
 ## 数値リテラル
+⭐整数してらるは全てInteger型（Lを付けた場合のみlong）
+- 2進数：Ob...
 - 8進数：0〜7（先頭0）
 - 16進数：0x
 - _：先頭・末尾・記号の前後❌
@@ -89,7 +94,7 @@ java ex15.Main
   
 ## mutable(可変) / imutable(不変)
 imutable
-- String：変更不可（新しいオブジェクトを作る）
+- String：変更不可、変更系メソッドも❌
 - 全てのフィールドを`private`で定義
 - クラスをfinalで宣言(override不可)
 
@@ -127,8 +132,6 @@ mutable
   "ab".concat("c") → "abc"
 
   [注意]
-- Stringはimmutable（不変）
-- concatしても元は変わらない
 - null.concat(...) → NullPointerException
 
 replace(start, end, str) の数え方
@@ -138,17 +141,56 @@ replace(start, end, str) の数え方
   ![](img/99-2.jpg)
   
   [注意]
-- Stringはimmutable（不変）
-- replaceしても元は変わらない
+- `concat`や`replace`してもStringの元は変わらない
 
 ## Stringの比較
-true = メモリ内にある文字列への参照を戻す
-⭐️同じ値の場合
-- intern()：newしてもダブルクォートありのリテラルと比較ならtrue⭕️（intern()のみnewとリテラル比較）
-- String a = "a"：ダブルクォートあり（コンスタントプール）⭕️
-- .equals()：値比較（new無関係）⭕️⭐自作クラスは絶対Stringではないからfalse❌
-false = アドレスが違う
+
+### **`==`：同じアドレスを見る**：メモリ内にある文字列への参照を戻す
+
+⭕️ true
+- リテラル同志
+- コンスタントプール（`""`のこと）共有
+  ```
+  "a" == "a"
+  ```
+  ```
+  // a == b⭕️
+  String a = "a";
+  String b = "a";
+  ```
+❌ false
+- newすると別オブジェクト
+
+### **`equals()`： 中身（値）を見る**
+⭕️ true
+- 一方でもnewしててもtrue
+- StringはequalsをOverride済み
+  ```
+  "a".equals(new String("a"))
+  ```
+
+❌ false
 - new：新しい領域（どちらかがnewしていれば❌）
+    ```
+    new String("a") == "a"
+    ```
+- 自作クラス
+- equals未Override
+  ```
+  @Override
+  public boolean equals(Object obj)
+
+  // 上の2行がないとfalse
+  new Dog("P").equals(new Dog("P"))
+  ```
+### `intern()`
+⭕ true
+- intern()でコンスタントプール使用
+
+  ⭐intern()：newしてもダブルクォートありのリテラルと比較ならtrue⭕️
+  ```
+  new String("a").intern() == "a"
+  ```
 
 ## StirngBuilder
 - .equals()：false❌（toStringを使うとtrue⭕️）
@@ -221,6 +263,7 @@ equals()：以下２つがなく、newしていればfalse！！
 ⚠️例外：true になるパターン
 
 @Overrideしている場合：同じ「値」ならtrue
+⭐Stirngは@Overrideしている
 
 - instanceof：型をチェックする（true / false）
     - 親型でもtrue（継承OK）
@@ -228,9 +271,10 @@ equals()：以下２つがなく、newしていればfalse！！
     - 無関係な型同士はコンパイルエラー
 
 ## instanceof
-### 中身をチェックする
+### 型チェック
 - `obj instanceof A` ：obj が A or 子ならtrue（型チェック）
 - `obj instanceof A b`：trueのときだけ b として使える（パターンマッチ）
+- 親型でもOK
 - 無関係な型：コンパイルエラー
 - null：false（例外にならない）
   ```
@@ -283,6 +327,8 @@ do while
 
 ポイント
 - static変数は全インスタンスで共有
+　- static：公園の時計（腕時計にはアクセス不可）
+  - 非static：腕時計（公園の時計に合わせる）
 - staticは「クラス名.メンバ」で呼べる
 - static ≠ 変更不可
 - 変更不可にしたい場合は final を使う
@@ -301,9 +347,21 @@ do while
 - obj.name;       // フィールド
 
 ## ラッパー型
-- ボクシング：int → Integer（自動）
-- アンボクシング：Integer → int（自動）
-- nullをintにすると例外（NPE）
+- オートボクシング：箱詰め
+  - 裸の数字 → 箱入りの数字
+  - int → Integer（自動） 
+  - double → Double
+  - char →- Character
+  - boolean → Boolean
+
+- アンボクシング：箱出し
+  - 箱入り → 裸の数字を取り出す
+  - Integer → int（自動）
+  - nullをintにすると例外（NPE）
+  ```
+  Integer n = null; // 箱の中身が空っぽ（null）
+  int x = n;        // 箱から出そうとしたら…中身がない！ ➡️ NullPointerException（ぬるぽ）
+  ```
 
 ## 可変長引数(...)
 - 位置のルール： ... は必ず **型のすぐ後ろ** に書く（例：int... values）
