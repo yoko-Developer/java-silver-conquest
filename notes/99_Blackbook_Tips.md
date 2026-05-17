@@ -430,11 +430,26 @@ do while
 - `toString`, `hashCode`, `equals`メソッドが定義されている
 - publicとアクセス修飾子なしのみ🆗
 - サブクラスの定義（継承）不可❌
-- 引数なしのコンストラクタ生成不可❌
+- 引数なしのコンストラクタ（デフォルトコンストラクタ）生成不可❌`list.add(new Item());`
 - static以外のインスタンスフィールドは追加不可❌
 
-例：
-record Person(String name, int age) {}
+  ```
+  ⭕️
+  record Person(String name, int age) {}
+  ```
+  ```
+  ⭕️
+  record Person(String name, int age) {
+      static String planet = "Earth"; // ⭕️static（みんなの共通ルール）ならOK！
+  }
+  ```
+
+  ```
+  record Person(String name, int age) {
+    int height; // ❌「static以外のインスタンスフィールド」はNG！
+  }
+  ```
+
 
 コンストラクタ
 - 全引数コンストラクタは自動生成される
@@ -497,8 +512,7 @@ abstract class
 - 抽象メソッドをすべて実装する必要がある
 
 ## シグニチャ（signature）
-
-- メソッド名 + 引数リスト（型・数・順番）
+- メソッド名 + 引数リスト（型・数・順番）のこと
 
   ※戻り値は含まない❌
 
@@ -606,7 +620,7 @@ Error
 
 ## try-with-resources
 ### ファイルやデータベースなど「使い終わったら必ず閉じなければいけないもの（リソース）」を自動でお片付け（close）してくれる超便利な仕組み
-- try() にリソースを書く
+- try() にリソースを書く←この形が目印👀
 - 自動でcloseされる（finallyいらない）
 - AutoCloseableを実装している必要あり
 - → リソース自動クローズが目的（例外処理ではない）
@@ -614,10 +628,22 @@ Error
 - try()の中
 → `AutoCloseable` / `Closeable` のクラスだけOK
 
+実行順
+1. try中で例外
+   
+   ⬇️
+2. close()
+      
+   ⬇️
+3. catch
+    
+   ⬇️
+4. finally
+
 書き方
 - カッコの中で「宣言」と「作成」をセットで記述する
 ```
-try (型 変数 = new クラス()) {
+try( ){ // tryの後ろにカッコがあれば「try-with-resources」
     処理
 }
 ```
