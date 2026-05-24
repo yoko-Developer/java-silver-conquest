@@ -1,8 +1,22 @@
-## 継承`(A a = new B())`
+# 確認する順
+1. main見る
+2. new どこ？
+3. 左右判定ある？
+4. 呼ばれるメソッド探す
+5. コンパイルエラー候補見る
+
+## 左右判定（継承・implements）
+`A a = new B()`
+
+⭐️呼び出すメソッド探し
+    → 左型で探す
 - () ある？
-→ メソッド → 右(new側)
+  - メソッド → 右(new側)見る
+  - override実行は右(new側)
+
 - () ない？
-→ フィールド → 左
+
+  - フィールド → 左見る
 
 ## implementsあったら
 1. public？（同じか緩い？）
@@ -15,21 +29,24 @@
 2. catch 上から探す（ヒットしたらcatch終わり）
 3. finally 基本実行
 
-## try-with-resources
-
+### try-catch-finally（昔のやり方）
+1. try（爆発）
+2. catch（バグ捕獲）
+3. finally（ここで人間が手で蓋を閉める！）
+### try-with-resources
     try() ⭐️目印：これあれば
+1. ry（爆発）
+2. 自動で蓋閉め（close）
+3. catch（バグ捕獲）
+4. finally（完了）
 
-    ↓
+⭕️ try + catch + finally （全部入り）
 
-    close() 自動
+⭕️ try + catch （finallyなし）
 
-    ↓
+⭕️ try + finally （catchなし）
 
-    catch
-
-    ↓
-
-    finally
+❌ try だけ （後ろに誰もいないからエラー）
 
 ## String
 - String
@@ -88,11 +105,10 @@
 3. public弱くなってない？
 
 ## && と ||（左だけ）
-
 - `&&` → 左falseなら右見ない
 - `||` → 左trueなら右見ない
 
-## & と |（両方）
+## & と |（両方見る）
 - `&` と `|` → 必ず両方実行
 - `|` どっちかtrue
 
@@ -117,17 +133,24 @@
   → classもabstract必要
 
 ## ループ
+continue/breakは出ない
+
+⭐️出力が continue / break の上か下か見る
 - continue
 
-    → continue含めて下の処理スキップ
+    → continue含めて下の処理スキップ（そのループのみ）
+
     → 次のループへ
 
 - break
 
-    → 今いるブロック終了
+    → 今いるブロック終了（その後の繰り返ししない）
+
     → break含めてfinish
 
 ## 二次元配列
+行ごとに長さ違ってOK
+（ガタガタ配列OK）
 
 `data[i][j]`
 
@@ -177,4 +200,95 @@ instanceof String str（instanceOfが作った変数）
 引数違い
 （型・数・順番）
 
-⭐️呼び出し：引数が一致する方
+⭐️呼び出し：引数の型が一致する方（近い方）
+
+### メソッド呼び出し
+◽️どのメソッド呼ぶ？
+- 左型で探す
+（オーバーロード）
+- 実際に実行されるメソッド
+→ 右(new側)
+（オーバーライド）
+
+### コンストラクタ呼び出し
+- super()：親のコンストラクタ
+- this()：自分のクラスの別ブロックのコンストラクタ
+s
+## catch順
+子 → 親
+  
+    狭い罠（チワワ） → 広い罠（動物）
+
+親 → 子
+- 下（狭い罠）のcatch到達不能
+- コンパイルエラー
+
+## 継承
+super → 親
+
+finalメソッド → override不可
+
+super() → 親コンストラクタ
+
+## super
+- コンストラクタ：super() 省略OK
+（自動追加）
+
+- 親と子で同じメソッド名で子が親を呼ぶ：super.メソッド名() 省略できない
+- 子が親を呼ぶ：super()省略化
+ 
+  ※オーバーライドなしの場合
+
+## アクセス修飾子
+- override（上書き）
+
+    親 ≤ 子（同じか広く）
+
+- interface → public 必須
+
+- catch
+
+    子
+
+    ↓
+
+    親
+
+    ---
+
+    親
+
+    ↓
+
+    子 ❌ （下に到達できない）
+
+    | 修飾子       | 見える範囲              |
+    |:---------:|:------------------:|
+    | public    | 世界中  |
+    | protected | 同じ家 + 別の家の子供 <br> ⭐️継承のみ⭐️子供なら別の家でもOK|
+    | なし        | 同じ家のみ         |
+    | private   | 同じ部屋だけ               |
+
+## コンパイルと実行
+1. javac → コンパイル
+    .java必要
+
+    `javac Sample.java`
+    
+2. java → 実行
+    
+    .class書かない❌
+
+    `java Sample`
+
+⭐️Java11+
+
+→ java Sample.java OK
+
+## キャスト
+大きい箱から小さい箱に変更 →
+キャスト必須
+
+## getter/setter
+- getter：privateで値を見るボタン
+- setter：privateな値を変えるボタン
