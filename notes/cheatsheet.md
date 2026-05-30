@@ -33,12 +33,12 @@
 1. try（爆発）
 2. catch（バグ捕獲）
 3. finally（ここで人間が手で蓋を閉める！）
+
 ### try-with-resources
     try() ⭐️目印：これあれば
-1. ry（爆発）
-2. 自動で蓋閉め（close）
-3. catch（バグ捕獲）
-4. finally（完了）
+1. close（） 最初
+2. catch
+3. finally（） 最後
 
 ⭕️ try + catch + finally （全部入り）
 
@@ -59,6 +59,17 @@
 ## equals / ==
 - == ：アドレス
 - .equals() ：値
+  
+### 配列 clone()
+外側だけコピー
+```
+array 1 == array2; // false❌
+```
+
+中身の配列は同じアドレス
+```
+array1[1] == array2[1]; // true
+```
 
 ## コンストラクタ（親から先）
 1. new B() // 子
@@ -79,6 +90,7 @@
 ## メソッド呼び出し
 - static → `クラス名.メソッド名`
 - default → `インターフェース名.super.メソッド名()`
+- static → this使えない❌s
 
 ## sealed + permits（継承できる子を制限）
 子は必須
@@ -119,9 +131,6 @@
 
     → `new` できない
 
-    →`{}`内を`;`で終わらせるなら
-    中身の頭に`abstract`必須
-
 - abstract method
     
     →   `{}`なし
@@ -131,6 +140,38 @@
 - abstract method ある
 
   → classもabstract必要
+
+### ⭕️❌判定
+
+⭕ abstract class
+- 処理なしOK
+
+❌ final abstract
+- 処理あり & なしは両立不可
+
+❌ new AbstractClass()
+- abstractはnew不可
+- newできない
+
+---
+
+## abstractメソッド(抽象メソッド)
+
+abstractあり(抽象メソッド)
+-  `;` 必須
+-  `{}` ダメ❌
+-  処理なし
+
+---
+
+abstractなし(具象メソッド)
+-  {} 必須
+-  処理必要
+
+---
+
+⭕ abstractメソッド持つクラス
+→ classもabstract必須
 
 ## ループ
 continue/breakは出ない
@@ -147,6 +188,8 @@ continue/breakは出ない
     → 今いるブロック終了（その後の繰り返ししない）
 
     → break含めてfinish
+
+- continue;の次の行に実行コードは書けない❌（到達不能コード）
 
 ## 二次元配列
 行ごとに長さ違ってOK
@@ -194,11 +237,19 @@ instanceof String str（instanceOfが作った変数）
 - 同じ名前 x なら → ローカル変数優先
 - this.x → フィールド
 
+## オーバーライド
+
+⭐️チェック
+1. メソッド名同じ？
+2. 引数同じ？
+3. 戻り値は 同じ or 親 > 子（animal > dog）
+4. public弱くなってない？
+
 ## オーバーロード
 メソッド名同じ
 
 引数違い
-（型・数・順番）
+（型 or 数 or 順番）⇦どれか1つでOK
 
 ⭐️呼び出し：引数の型が一致する方（近い方）
 
@@ -224,6 +275,8 @@ s
 - コンパイルエラー
 
 ## 継承
+extends：子 → 親 → その親（全員呼ばれる）
+
 super → 親
 
 finalメソッド → override不可
@@ -292,3 +345,7 @@ super() → 親コンストラクタ
 ## getter/setter
 - getter：privateで値を見るボタン
 - setter：privateな値を変えるボタン
+  
+## getter / setter
+- getter： 金庫の中身を「持ってきて（getして）画面に見せる」
+- setter： 金庫の中身を新しいデータに「書き換える（setする）」

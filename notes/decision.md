@@ -22,12 +22,14 @@ public class Main {
     }
 }
 
-⭐左右判定の方法
+## ⭐左右判定の方法
+
 ①フィールドは左(18行目)
-　Oyako p // つまりOyakoクラス
+- Oyako p // つまりOyakoクラス
+
 ②右側は実体・中身(18行目)
-　new Kodkmo() // newの後ろのクラス名・Kodomo
+- new Kodkmo() // newの後ろのクラス名・Kodomo
+
 ③何を呼び出してるか見る(20行目)
-　p.name // ()がない -> フィールド＝親！！
-　p.hello //  ()がある-> メソッド＝子！！
-　
+- p.name // ()がない -> フィールド＝親！！
+- p.hello //  ()がある-> メソッド＝子！！
