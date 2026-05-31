@@ -151,7 +151,6 @@ array1[1] == array2[1]; // true
 
 ❌ new AbstractClass()
 - abstractはnew不可
-- newできない
 
 ---
 
@@ -228,10 +227,10 @@ instanceof String str（instanceOfが作った変数）
 → true側だけ str使える
 
 ## var
-- ローカル変数のみOK
+- ローカル変数のみOK ⭕️
 - 初期化必須
-- 型変更NG
-- null単体NG
+- 型変更NG ❌
+- null単体NG ❌
 
 ## this
 - 同じ名前 x なら → ローカル変数優先
@@ -242,7 +241,7 @@ instanceof String str（instanceOfが作った変数）
 ⭐️チェック
 1. メソッド名同じ？
 2. 引数同じ？
-3. 戻り値は 同じ or 親 > 子（animal > dog）
+3. 戻り値は 同じ or 
 4. public弱くなってない？
 
 ## オーバーロード
@@ -264,7 +263,6 @@ instanceof String str（instanceOfが作った変数）
 ### コンストラクタ呼び出し
 - super()：親のコンストラクタ
 - this()：自分のクラスの別ブロックのコンストラクタ
-s
 ## catch順
 子 → 親
   
@@ -279,7 +277,7 @@ extends：子 → 親 → その親（全員呼ばれる）
 
 super → 親
 
-finalメソッド → override不可
+finalメソッド → override不可❌
 
 super() → 親コンストラクタ
 
@@ -295,7 +293,7 @@ super() → 親コンストラクタ
 ## アクセス修飾子
 - override（上書き）
 
-    親 ≤ 子（同じか広く）
+    親 <= 子（同じか広く）
 
 - interface → public 必須
 
@@ -315,10 +313,10 @@ super() → 親コンストラクタ
 
     子 ❌ （下に到達できない）
 
-    | 修飾子       | 見える範囲              |
+    | 修飾子       | 見える範囲     |
     |:---------:|:------------------:|
     | public    | 世界中  |
-    | protected | 同じ家 + 別の家の子供 <br> ⭐️継承のみ⭐️子供なら別の家でもOK|
+    | protected | 同じ家 + 別の家の子供 |
     | なし        | 同じ家のみ         |
     | private   | 同じ部屋だけ               |
 
@@ -349,3 +347,18 @@ super() → 親コンストラクタ
 ## getter / setter
 - getter： 金庫の中身を「持ってきて（getして）画面に見せる」
 - setter： 金庫の中身を新しいデータに「書き換える（setする）」
+
+## 三項演算子（if の1行版）
+条件 ? trueの時 : falseの時
+
+例
+```
+int a = 5;
+int x = (a > 3) ? 100 : 200;
+```
+
+a > 3 ？
+
+YES → 100
+
+NO  → 200
