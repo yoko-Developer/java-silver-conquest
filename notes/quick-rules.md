@@ -59,14 +59,22 @@ a.test();
 ## override
 
 同じ名前
+
 同じ引数
 
-⭕️ override
+    ⭕️ override
 
 引数違う
 
-❌ override
-⭕️ overload
+    ❌ override
+
+    ⭕️ overload
+
+戻り値違うだけ（コンパイルエラー💥）
+
+    ❌ overload
+
+    ❌ override
 
 ## abstract （抽象メソッド）
 
@@ -116,7 +124,7 @@ new 子()
 
 - インターフェース（implements） ➡️ 実装クラスは`public` のみ ⭕️
 
-## overrideできない
+## ⭐️overrideできない
 
 private （親） ❌
 
@@ -153,6 +161,32 @@ array[0] = new int[100];
 array[1] = new int[2];
 ```
 
+`new int[2][4] array.length`
+
+➡️ 外側の長さ（1番目の数字）
+
+➡️ 2
+
+⭐️最初の数字 → 行数
+
+⭐️次の数字 → 列数
+
+```
+[ ][ ][ ][ ] ➡️ 1行目
+[ ][ ][ ][ ] ➡️ 2行目
+```
+
+```
+new int[2][4]
+
+array.length
+→ 最初の数字
+
+array[0].length
+→ 2番目の数字
+```
+
+
 ## getter / setter
 
 set
@@ -170,8 +204,80 @@ set
     → .java 必要 ⭕️
 
     `javac Sample.java`
-1. java （実行）
+2. java （実行）
 
     → .class 不要 ❌
 
     `java Sample`
+
+    ### クラスパス(-cp)の区切り
+
+    `.` ⭕️
+
+    `/` ❌
+
+    ### クラスパスの最後
+
+    パッケージ名.クラス名 ⭕️
+
+## var
+ローカル変数のみ ⭕️
+
+## """（テキストブロック）
+最初の `”””` の次は改行必須⚠️
+
+最後は改行しなくてOK ⭕️
+
+改行(Enter)も1文字とカウント
+
+## instanceof
+
+親 instanceof 子
+❌
+
+子 instanceof 親
+⭕️
+
+## 三項演算子（if の1行版）
+条件 ? true側 : false側
+
+条件？
+
+ YES → true側
+
+ NO  → false側
+
+## 論理演算子
+1. `&` （かつ）🔴
+
+    ➡️ 必ず両方見る
+
+    ➡️ 両方trueでtrue
+
+2. `^` 🔴
+
+    ➡️  必ず両方見る
+
+    ➡️  片方だけtrueでtrue
+
+3. `|` （または）🔴
+
+    ➡️ 必ず両方見る
+
+    ➡️ どちらかtrueでtrue
+
+4. `&&` （かつ）⭕️
+
+    ➡️ 左falseなら右見ない
+
+    ➡️ 両方trueでtrue
+
+5. `||` （または）⭕️
+
+    ➡️ 左trueなら右見ない
+
+    ➡️ どちらかtrueでtrue
+
+### 優先順位（⭐ 左ほど先に計算）
+
+`&` → `^` → `|` → `&&` → `||`
