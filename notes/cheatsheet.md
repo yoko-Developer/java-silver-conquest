@@ -48,6 +48,13 @@
 
 ❌ try だけ （後ろに誰もいないからエラー）
 
+```
+Exception
+├─ IOException
+├─ SQLException
+└─ RuntimeException
+```
+
 ## String
 - String
   
@@ -90,7 +97,7 @@ array1[1] == array2[1]; // true
 ## メソッド呼び出し
 - static → `クラス名.メソッド名`
 - default → `インターフェース名.super.メソッド名()`
-- static → this使えない❌s
+- static → this使えない ❌
 
 ## sealed + permits（継承できる子を制限）
 子は必須
@@ -173,19 +180,18 @@ abstractなし(具象メソッド)
 → classもabstract必須
 
 ## ループ
-continue/breakは出ない
 
 ⭐️出力が continue / break の上か下か見る
-- continue
+- continue（その周回終了）
 
     → continue含めて下の処理スキップ（そのループのみ）
-
+<br>
     → 次のループへ
 
 - break
 
     → 今いるブロック終了（その後の繰り返ししない）
-
+<br>
     → break含めてfinish
 
 - continue;の次の行に実行コードは書けない❌（到達不能コード）
@@ -341,12 +347,9 @@ super() → 親コンストラクタ
 キャスト必須
 
 ## getter/setter
-- getter：privateで値を見るボタン
-- setter：privateな値を変えるボタン
-  
-## getter / setter
-- getter： 金庫の中身を「持ってきて（getして）画面に見せる」
-- setter： 金庫の中身を新しいデータに「書き換える（setする）」
+- getter：privateで値を見るボタン（値取得）
+- setter：privateな値を変えるボタン（値変更）
+
 
 ## 三項演算子（if の1行版）
 条件 ? trueの時 : falseの時
