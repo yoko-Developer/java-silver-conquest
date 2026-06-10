@@ -55,7 +55,7 @@ javac ex15/Main.java
 java ex15.Main
 
 ## 数値リテラル
-⭐整数してらるは全てInteger型（Lを付けた場合のみlong）
+⭐整数リテラルは基本`int`（Lを付けたらlong）
 - 2進数：Ob...
 - 8進数：0〜7（先頭0）
 - 16進数：0x
@@ -329,7 +329,7 @@ do while
 
 ポイント
 - static変数は全インスタンスで共有
-　- static：公園の時計（腕時計にはアクセス不可）
+  - static：公園の時計（腕時計にはアクセス不可）
   - 非static：腕時計（公園の時計に合わせる）
 - staticは「クラス名.メンバ」で呼べる
 - static ≠ 変更不可
@@ -699,3 +699,7 @@ try-with-resources
   // 結果
   // A BAB
   ```
+
+## getter / setter
+- getter： 金庫の中身を「持ってきて（getして）画面に見せる」
+- setter： 金庫の中身を新しいデータに「書き換える（setする）」
