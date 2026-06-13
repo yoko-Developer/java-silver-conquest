@@ -55,6 +55,12 @@ Exception
 └─ RuntimeException
 ```
 
+```
+IndexOutOfBoundsException
+├─ ArrayIndexOutOfBoundsException
+└─ StringIndexOutOfBoundsException
+```
+
 ## String
 - String
   
@@ -62,6 +68,19 @@ Exception
 - 変更系メソッド
 
     →新しいString作るだけ
+
+## intern()
+Stringのコンスタントプールを使う
+
+⭐️ newとリテラルの比較でもtrueになる
+
+`new String("a").intern() == "a"`
+
+→ true ⭕️s
+
+`a.intern() == b.intern()`
+
+→ true ⭕️
 
 ## equals / ==
 - == ：アドレス
@@ -109,7 +128,6 @@ array1[1] == array2[1]; // true
 - permits必要
 
 ## override（上書き）
-
 - ()ある？
   
   → メソッド → 右(new側)
@@ -220,6 +238,43 @@ data[1][2]
 → 2行目3列目
 ```
 
+## _（アンダースコア）
+⭕️ 数字の間
+- 123_456
+- 0b0_1
+- 0_52
+
+❌ 先頭
+<br>
+❌ 末尾
+<br>
+❌ 記号の前後
+- _123
+- 123_
+- 3_.14
+- 999_L
+- 0x_52
+
+## do-while
+*doとwhileの間は必ず1回実行される🐱*
+
+```
+do {
+    System.out.println("にゃん🐱");
+} while(false);
+```
+
+出力：にゃん🐱
+<br>
+↓
+<br>
+条件は後で見る👀
+
+### while
+条件 → 処理
+### do-while
+処理 → 条件
+
 ## for 二重ループ
 外側 → 行移動
 
@@ -234,7 +289,8 @@ instanceof String str（instanceOfが作った変数）
 
 ## var
 - ローカル変数のみOK ⭕️
-- 初期化必須
+- 初期化必須⚠️
+- 引数 ❌
 - 型変更NG ❌
 - null単体NG ❌
 
@@ -326,25 +382,86 @@ super() → 親コンストラクタ
     | なし        | 同じ家のみ         |
     | private   | 同じ部屋だけ               |
 
-## コンパイルと実行
-1. javac → コンパイル
-    .java必要
+## コマンド
 
-    `javac Sample.java`
-    
-2. java → 実行
-    
-    .class書かない❌
+1. javac（コンパイル）
 
-    `java Sample`
+→ .java 必須 ⭕
 
-⭐️Java11+
+`javac Sample.java`
 
-→ java Sample.java OK
+### c-java
+
+javac
+<br>
+↓
+<br>
+cいる👀
+<br>
+↓
+<br>
+Compile
+<br>
+↓
+<br>
+ソース(.java)食べる
+
+2. java（実行）
+
+→ 通常はクラス名だけ ⭕
+
+`java Sample`
+
+→ .class は書かない ❌
+
+`java Sample.class ❌`
+
+### javaクラス
+java
+<br>
+↓
+<br>
+cいない👀
+<br>
+↓
+<br>
+実行
+<br>
+↓
+<br>
+クラス名だけ(`java Sample`)
+
+⭐️ Java11+
+
+コンパイルしていない .java を
+直接実行できる
+
+`java Sample.java ⭕️`
 
 ## キャスト
 大きい箱から小さい箱に変更 →
 キャスト必須
+
+### charの自動変換
+char → int ⭕️
+<br>
+char → long ⭕️
+<br>
+char → float ⭕️
+<br>
+char → double ⭕️
+<br>
+<br>
+char → byte ❌
+<br>
+char → short ❌
+
+### to char
+byte → char ❌
+<br>
+short → char ❌
+
+int → char ❌（キャスト必要）
 
 ## getter/setter
 - getter：privateで値を見るボタン（値取得）
@@ -365,3 +482,17 @@ a > 3 ？
 YES → 100
 
 NO  → 200
+
+## StringBuilder
+
+new StringBuilder()
+<br>
+→ capacity 16
+
+new StringBuilder("abcde")
+<br>
+→ 文字数 + 16
+
+"abcde"
+<br>
+→ 5 + 16 = 21
