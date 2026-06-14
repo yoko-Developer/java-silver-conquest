@@ -271,19 +271,47 @@ static （両方） ❌
 ⭐️親のメソッド使う
 ```
 
+## 瞬殺⭐️ぬるぽを探せ
+配列の参照型
+
+```
+Item[] items = new Item[3] 👀 見つけた
+``` 
+
+↓
+
+Itemは3個作られてない
+
+```
+null, null, null` 中身null
+```
+
+⭐️ ぬるぽ探せ‼️ 👀
+
+## 瞬殺 ⭐️ AllayList
+add
+<br>
+→ 増える
+
+set
+<br>
+→ 置換
+
+
 ## try-with-resources
 ⭐️ `try()` closeは逆
 
 close → catch → finally
 
 ## catch 
-
 小さい → 大きい ⭕
 
 大きい → 小さい ❌💥
 （到達不能）
 
+
 ## 配列 clone()
+
 `array1.clone()`
 
 外だけコピー
@@ -291,6 +319,12 @@ close → catch → finally
 ⭕️ array1[1] == array2[1]
 
 ❌ array1 == array2
+
+## 配列 （罠集😈）
+- []の位置は自由
+- 最初の要素数は必須
+- 要素数と初期化子は併用不可[]{} （両方数字があるとダメ）
+- {}があれば空で良い
 
 ## 二次元配列
 `new int[2][4]`

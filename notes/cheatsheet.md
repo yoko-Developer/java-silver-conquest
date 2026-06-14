@@ -97,6 +97,148 @@ array 1 == array2; // false❌
 array1[1] == array2[1]; // true
 ```
 
+配列の出力 → ハッシュコード
+
+`System.out.println(array);`
+
+要素の出力 → 0
+
+`System.out.println(array[0]);`
+
+## 配列 （定義方法）
+### 宣言
+
+⭐️ [] の位置はどこでも ⭕️
+
+```
+int[] a; ⭕
+int a[]; ⭕
+
+int[][] a; ⭕
+int[] a[]; ⭕
+int a[][]; ⭕
+```
+
+⭐️宣言時に要素は書かない ❌
+
+```
+int a[3]; ❌
+```
+
+### 宣言時
+⭐️ 要素数は書かない
+
+```
+int[] a; ⭕
+
+int a[3]; ❌ 💥 コンパイルエラー
+```
+
+### インスタンス生成時（右側）
+⭐️ 要素数は書かなきゃダメ ❌
+```
+int[] a = new int[3] ⭕️
+
+int[] a = new int[] ❌💥
+```
+
+多次元配列
+
+⭐️ 最初の要素数は省略不可 ❌
+
+
+⭐️ 最初は必須、後ろは省略可
+```
+int[][] array = new int[2][3] ⭕️
+int[][] array = new int[2][]  ⭕️
+
+int[][] array = new int[][3] ❌💥
+```
+
+⭐️ 整数以外 ❌
+```
+int[][] array = new int[3.5] ❌💥
+
+int[] a = new int[-1] ❌
+実行時例外
+（NegativeArraySizeException）
+```
+
+初期化子
+```
+int[] a = new int[] {1, 2, 3}; ⭕️
+
+int[] a = new int[3] {1,2,3} ❌`
+❌ 要素数と初期化子の併用不可
+```
+
+⭐️ {} があれば0個あると分かる ⭕️
+```
+int a[][] = {}; ⭕️
+int[][] a = new int[][]{}; ⭕️
+```
+
+### nullの罠😈
+```
+String s = null; ⭕️
+```
+
+```
+String s = null;
+s.length();      ❌
+```
+nullが存在するだけ
+<br>
+→ OK ⭕️
+
+null.メソッド() ❌
+<br>
+null.フィールド ❌
+<br>
+`.`でnullを触る
+<br>
+→ ぬるぽ ❌
+
+## ArrayList
+### 特徴
+- 重複OK ⭕️
+- null OK ⭕️
+- スレッドセーフではない ❌
+
+- `ArrayList list = new ArrayList<>();`
+  <br>
+ → どんな型でも入れられるバッグ
+### 追加・変更
+- add(value)
+  <br>
+→ 末尾追加
+- add(index, value) 
+  <br>
+ → 指定位置に追加（位置,値）
+- set(index, value)
+  <br>
+  → 置き換え
+
+### 削除
+- remove(value)
+  <br>
+  → 
+  
+  ⭐️ remove判定はequals()
+  <br>
+  equals()の中身次第で削除される要素が決まる
+
+### ひっかけ💥
+    ⭐️ for-each中にadd/remove（コレクション変更）
+
+    → 実行時例外💥
+
+    ConcurrentModificationException
+
+    ⚠️ ただし次の要素取得前にループ終了すると
+    
+    例外にならない場合あり
+
 ## コンストラクタ（親から先）
 1. new B() // 子
 
@@ -215,13 +357,29 @@ abstractなし(具象メソッド)
 - continue;の次の行に実行コードは書けない❌（到達不能コード）
 
 ## 二次元配列
+例
+```
+String[][] array = {
+    {"A","B"},
+    {"C","D","E"}
+};
+```
+
+```
+array[0][0] → A
+array[0][1] → B
+
+array[1][0] → C
+array[1][1] → D
+array[1][2] → E
+```
+
 行ごとに長さ違ってOK
 （ガタガタ配列OK）
 
 `data[i][j]`
 
 - i → 外側（行）
-
 - j → 内側（列）
 
 data.length

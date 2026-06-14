@@ -2,6 +2,7 @@
 
 ## StringBuilder
 ⭐️ mutable（可変）
+
 変更系メソッドで元が変わる
 
 - append("a")
@@ -34,13 +35,11 @@
   <br>
   i番目の文字（0開始）⭐️範囲外は実行時エラー
 
-- indexOf("a")
-  <br>
-  最初に見つかった位置（⭐️なければ-1）
-
 - indexOf()
   <br>
-  開始位置(0から順番)
+  最初に見つかった位置（0から順番）
+  <br>
+  ⭐️なければ-1
 
 ### 判定
 - startsWith("ab")
@@ -128,6 +127,23 @@
   String... value
   int... nums
   ```
+
+## コピー
+- clone()
+  <br>
+  配列をコピーする
+
+  ⭐️ clone()した配列は別物
+  `arrayA == arrayB`
+  <br>
+  → false
+
+  ⭐️ 多次元配列は浅いコピー
+
+  `arrayA[0] == arrayB[0]`
+  <br>
+  → true
+
 ## switch
 - yield
   <br>
