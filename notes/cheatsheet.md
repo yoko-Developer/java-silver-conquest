@@ -35,7 +35,7 @@
 3. finally（ここで人間が手で蓋を閉める！）
 
 ### try-with-resources
-    try() ⭐️目印：これあれば
+    try() ⭐️目印：これあれば👀
 1. close（） 最初
 2. catch
 3. finally（） 最後
@@ -76,7 +76,7 @@ Stringのコンスタントプールを使う
 
 `new String("a").intern() == "a"`
 
-→ true ⭕️s
+→ true ⭕️
 
 `a.intern() == b.intern()`
 
@@ -120,7 +120,6 @@ int a[][]; ⭕
 ```
 
 ⭐️宣言時に要素は書かない ❌
-
 ```
 int a[3]; ❌
 ```
@@ -133,6 +132,15 @@ int[] a; ⭕
 
 int a[3]; ❌ 💥 コンパイルエラー
 ```
+
+### 初期値
+
+|  データ型  | 初期値  |
+|:---------:|:------------:|
+| int    | 0  |
+| long | 0  |
+| double   | 0.0    |
+| boolean   | false   |
 
 ### インスタンス生成時（右側）
 ⭐️ 要素数は書かなきゃダメ ❌
@@ -208,6 +216,7 @@ null.フィールド ❌
 - `ArrayList list = new ArrayList<>();`
   <br>
  → どんな型でも入れられるバッグ
+
 ### 追加・変更
 - add(value)
   <br>
@@ -228,16 +237,55 @@ null.フィールド ❌
   <br>
   equals()の中身次第で削除される要素が決まる
 
-### ひっかけ💥
-    ⭐️ for-each中にadd/remove（コレクション変更）
+### 不変 ⚠️
+`List.of(...)`
 
-    → 実行時例外💥
+⭐️変更不可
+
+- add ❌
+- remove ❌
+- set ❌
+
+`Arrays.asList(...)`
+
+⭐️固定長
+- add ❌
+- remove ❌
+- set ⭕️
+
+`new ArrayList<>()`
+
+⭐️全部OK
+
+
+### ひっかけ💥
+   ⭐️ for-each中にadd/remove（コレクション変更）
+
+   [A,B,C,D,E]
+<br>
+   ↓
+<br>
+   C削除
+<br>
+   ↓
+<br>
+   まだD,Eが残る
+<br>
+   ↓
+<br>
+    実行時例外💥
 
     ConcurrentModificationException
 
-    ⚠️ ただし次の要素取得前にループ終了すると
     
-    例外にならない場合あり
+<br>
+    ⭐️ 短い 例外にならない場合あり
+
+    [A,B,C]
+    ↓
+    Bをremove
+    ↓
+    Aだけ出力（Bも消える）👻
 
 ## コンストラクタ（親から先）
 1. new B() // 子
@@ -337,6 +385,7 @@ abstractなし(具象メソッド)
 ---
 
 ⭕ abstractメソッド持つクラス
+
 → classもabstract必須
 
 ## ループ
@@ -344,8 +393,11 @@ abstractなし(具象メソッド)
 ⭐️出力が continue / break の上か下か見る
 - continue（その周回終了）
 
-    → continue含めて下の処理スキップ（そのループのみ）
-<br>
+    → continue含めて下の処理スキップ
+    
+    （そのループのみ）
+
+
     → 次のループへ
 
 - break

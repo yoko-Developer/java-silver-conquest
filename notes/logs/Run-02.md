@@ -57,4 +57,9 @@
 39. ❌ ArrayListの場所指定
 40. ○ ArrayList#set() 📖👀
 41. ❌ equals() と remove() 📖👀
-42. ❌ 拡張for中のremove → 実行時💥 📖👀
+42. ❌ 拡張for中のremove → 短い配列 📖👀
+
+20260616
+
+43. ❌⤵️ 拡張for中のremove → 長い配列 → 実行時💥 📖👀
+44. ❌⤵️ コレクション型の不変、固定長 
