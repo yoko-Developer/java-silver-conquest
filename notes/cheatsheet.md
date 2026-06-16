@@ -35,7 +35,7 @@
 3. finally（ここで人間が手で蓋を閉める！）
 
 ### try-with-resources
-    try() ⭐️目印：これあれば
+    try() ⭐️目印：これあれば👀
 1. close（） 最初
 2. catch
 3. finally（） 最後
@@ -55,6 +55,12 @@ Exception
 └─ RuntimeException
 ```
 
+```
+IndexOutOfBoundsException
+├─ ArrayIndexOutOfBoundsException
+└─ StringIndexOutOfBoundsException
+```
+
 ## String
 - String
   
@@ -62,6 +68,19 @@ Exception
 - 変更系メソッド
 
     →新しいString作るだけ
+
+## intern()
+Stringのコンスタントプールを使う
+
+⭐️ newとリテラルの比較でもtrueになる
+
+`new String("a").intern() == "a"`
+
+→ true ⭕️
+
+`a.intern() == b.intern()`
+
+→ true ⭕️
 
 ## equals / ==
 - == ：アドレス
@@ -77,6 +96,196 @@ array 1 == array2; // false❌
 ```
 array1[1] == array2[1]; // true
 ```
+
+配列の出力 → ハッシュコード
+
+`System.out.println(array);`
+
+要素の出力 → 0
+
+`System.out.println(array[0]);`
+
+## 配列 （定義方法）
+### 宣言
+
+⭐️ [] の位置はどこでも ⭕️
+
+```
+int[] a; ⭕
+int a[]; ⭕
+
+int[][] a; ⭕
+int[] a[]; ⭕
+int a[][]; ⭕
+```
+
+⭐️宣言時に要素は書かない ❌
+```
+int a[3]; ❌
+```
+
+### 宣言時
+⭐️ 要素数は書かない
+
+```
+int[] a; ⭕
+
+int a[3]; ❌ 💥 コンパイルエラー
+```
+
+### 初期値
+
+|  データ型  | 初期値  |
+|:---------:|:------------:|
+| int    | 0  |
+| long | 0  |
+| double   | 0.0    |
+| boolean   | false   |
+
+### インスタンス生成時（右側）
+⭐️ 要素数は書かなきゃダメ ❌
+```
+int[] a = new int[3] ⭕️
+
+int[] a = new int[] ❌💥
+```
+
+多次元配列
+
+⭐️ 最初の要素数は省略不可 ❌
+
+
+⭐️ 最初は必須、後ろは省略可
+```
+int[][] array = new int[2][3] ⭕️
+int[][] array = new int[2][]  ⭕️
+
+int[][] array = new int[][3] ❌💥
+```
+
+⭐️ 整数以外 ❌
+```
+int[][] array = new int[3.5] ❌💥
+
+int[] a = new int[-1] ❌
+実行時例外
+（NegativeArraySizeException）
+```
+
+初期化子
+```
+int[] a = new int[] {1, 2, 3}; ⭕️
+
+int[] a = new int[3] {1,2,3} ❌`
+❌ 要素数と初期化子の併用不可
+```
+
+⭐️ {} があれば0個あると分かる ⭕️
+```
+int a[][] = {}; ⭕️
+int[][] a = new int[][]{}; ⭕️
+```
+
+### nullの罠😈
+```
+String s = null; ⭕️
+```
+
+```
+String s = null;
+s.length();      ❌
+```
+nullが存在するだけ
+<br>
+→ OK ⭕️
+
+null.メソッド() ❌
+<br>
+null.フィールド ❌
+<br>
+`.`でnullを触る
+<br>
+→ ぬるぽ ❌
+
+## ArrayList
+### 特徴
+- 重複OK ⭕️
+- null OK ⭕️
+- スレッドセーフではない ❌
+
+- `ArrayList list = new ArrayList<>();`
+  <br>
+ → どんな型でも入れられるバッグ
+
+### 追加・変更
+- add(value)
+  <br>
+→ 末尾追加
+- add(index, value) 
+  <br>
+ → 指定位置に追加（位置,値）
+- set(index, value)
+  <br>
+  → 置き換え
+
+### 削除
+- remove(value)
+  <br>
+  → 
+  
+  ⭐️ remove判定はequals()
+  <br>
+  equals()の中身次第で削除される要素が決まる
+
+### 不変 ⚠️
+`List.of(...)`
+
+⭐️変更不可
+
+- add ❌
+- remove ❌
+- set ❌
+
+`Arrays.asList(...)`
+
+⭐️固定長
+- add ❌
+- remove ❌
+- set ⭕️
+
+`new ArrayList<>()`
+
+⭐️全部OK
+
+
+### ひっかけ💥
+   ⭐️ for-each中にadd/remove（コレクション変更）
+
+   [A,B,C,D,E]
+<br>
+   ↓
+<br>
+   C削除
+<br>
+   ↓
+<br>
+   まだD,Eが残る
+<br>
+   ↓
+<br>
+    実行時例外💥
+
+    ConcurrentModificationException
+
+    
+<br>
+    ⭐️ 短い 例外にならない場合あり
+
+    [A,B,C]
+    ↓
+    Bをremove
+    ↓
+    Aだけ出力（Bも消える）👻
 
 ## コンストラクタ（親から先）
 1. new B() // 子
@@ -109,7 +318,6 @@ array1[1] == array2[1]; // true
 - permits必要
 
 ## override（上書き）
-
 - ()ある？
   
   → メソッド → 右(new側)
@@ -177,6 +385,7 @@ abstractなし(具象メソッド)
 ---
 
 ⭕ abstractメソッド持つクラス
+
 → classもabstract必須
 
 ## ループ
@@ -184,8 +393,11 @@ abstractなし(具象メソッド)
 ⭐️出力が continue / break の上か下か見る
 - continue（その周回終了）
 
-    → continue含めて下の処理スキップ（そのループのみ）
-<br>
+    → continue含めて下の処理スキップ
+    
+    （そのループのみ）
+
+
     → 次のループへ
 
 - break
@@ -197,13 +409,29 @@ abstractなし(具象メソッド)
 - continue;の次の行に実行コードは書けない❌（到達不能コード）
 
 ## 二次元配列
+例
+```
+String[][] array = {
+    {"A","B"},
+    {"C","D","E"}
+};
+```
+
+```
+array[0][0] → A
+array[0][1] → B
+
+array[1][0] → C
+array[1][1] → D
+array[1][2] → E
+```
+
 行ごとに長さ違ってOK
 （ガタガタ配列OK）
 
 `data[i][j]`
 
 - i → 外側（行）
-
 - j → 内側（列）
 
 data.length
@@ -220,6 +448,43 @@ data[1][2]
 → 2行目3列目
 ```
 
+## _（アンダースコア）
+⭕️ 数字の間
+- 123_456
+- 0b0_1
+- 0_52
+
+❌ 先頭
+<br>
+❌ 末尾
+<br>
+❌ 記号の前後
+- _123
+- 123_
+- 3_.14
+- 999_L
+- 0x_52
+
+## do-while
+*doとwhileの間は必ず1回実行される🐱*
+
+```
+do {
+    System.out.println("にゃん🐱");
+} while(false);
+```
+
+出力：にゃん🐱
+<br>
+↓
+<br>
+条件は後で見る👀
+
+### while
+条件 → 処理
+### do-while
+処理 → 条件
+
 ## for 二重ループ
 外側 → 行移動
 
@@ -234,7 +499,8 @@ instanceof String str（instanceOfが作った変数）
 
 ## var
 - ローカル変数のみOK ⭕️
-- 初期化必須
+- 初期化必須⚠️
+- 引数 ❌
 - 型変更NG ❌
 - null単体NG ❌
 
@@ -326,25 +592,86 @@ super() → 親コンストラクタ
     | なし        | 同じ家のみ         |
     | private   | 同じ部屋だけ               |
 
-## コンパイルと実行
-1. javac → コンパイル
-    .java必要
+## コマンド
 
-    `javac Sample.java`
-    
-2. java → 実行
-    
-    .class書かない❌
+1. javac（コンパイル）
 
-    `java Sample`
+→ .java 必須 ⭕
 
-⭐️Java11+
+`javac Sample.java`
 
-→ java Sample.java OK
+### c-java
+
+javac
+<br>
+↓
+<br>
+cいる👀
+<br>
+↓
+<br>
+Compile
+<br>
+↓
+<br>
+ソース(.java)食べる
+
+2. java（実行）
+
+→ 通常はクラス名だけ ⭕
+
+`java Sample`
+
+→ .class は書かない ❌
+
+`java Sample.class ❌`
+
+### javaクラス
+java
+<br>
+↓
+<br>
+cいない👀
+<br>
+↓
+<br>
+実行
+<br>
+↓
+<br>
+クラス名だけ(`java Sample`)
+
+⭐️ Java11+
+
+コンパイルしていない .java を
+直接実行できる
+
+`java Sample.java ⭕️`
 
 ## キャスト
 大きい箱から小さい箱に変更 →
 キャスト必須
+
+### charの自動変換
+char → int ⭕️
+<br>
+char → long ⭕️
+<br>
+char → float ⭕️
+<br>
+char → double ⭕️
+<br>
+<br>
+char → byte ❌
+<br>
+char → short ❌
+
+### to char
+byte → char ❌
+<br>
+short → char ❌
+
+int → char ❌（キャスト必要）
 
 ## getter/setter
 - getter：privateで値を見るボタン（値取得）
@@ -365,3 +692,17 @@ a > 3 ？
 YES → 100
 
 NO  → 200
+
+## StringBuilder
+
+new StringBuilder()
+<br>
+→ capacity 16
+
+new StringBuilder("abcde")
+<br>
+→ 文字数 + 16
+
+"abcde"
+<br>
+→ 5 + 16 = 21
