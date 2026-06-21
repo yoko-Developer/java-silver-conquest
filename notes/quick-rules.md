@@ -288,6 +288,25 @@ null, null, null` 中身null
 
 ⭐️ ぬるぽ探せ‼️ 👀
 
+## 瞬殺 ⭐️ returnを探せ（equals）
+` **equals** 問題
+
+1. return を探す
+2. 何を比較しているか見る
+3. 比較していない項目は無視
+
+例
+
+✨ **return s.num == this.num;**
+
+    → numだけ比較
+    → nameは無視
+
+✨ **A.equals(B)**
+
+    this = A
+    obj = B
+
 ## 瞬殺 ⭐️ AllayList
 add
 <br>
@@ -296,7 +315,20 @@ add
 set
 <br>
 → 置換
+```
+equals問題だ 👀
+↓
+this = 左
+obj = 右
+↓
+比較してるのは num
+↓
+10 == 10
+```
 
+⭐️ Objectは古い神様ルール
+
+equalsでもアドレス比較（==）になる
 
 ## try-with-resources
 ⭐️ `try()` closeは逆
@@ -480,6 +512,7 @@ args.length
 改行(Enter)も1文字とカウント
 
 ## instanceof
+お前は誰だ？
 
 親 instanceof 子
 ❌
@@ -493,6 +526,26 @@ null
 無関係
 💥 コンパイルエラー
 
+## if文
+```
+if( 条件式 ) { 
+  処理
+};
+```
+() 必須 ⚠️
+<br>
+{} 1行なら省略可
+
+⭐️ {} がない場合、if が効くのは次の1文だけ
+```
+if (false) // 🔴不合格！赤信号
+    System.out.println("A");
+
+System.out.println("B");
+```
+答え：B
+<br>
+Aは不合格
 ## 三項演算子（if の1行版）
 条件 ? true側 : false側
 
@@ -502,20 +555,130 @@ null
 
  NO  → false側
 
-## 論理演算子
-1. `&` （かつ）🔴
+ ## if / else / elseif
+ ```
+ if (...) {
+}
+else {  // ここが実行されても
+}
+if {    // その下も判定される
+}
+```
+    ⭐️ elseが終わったら、その下の処理へ進む
+
+- if
+- else
+- if ⭐️
+
+    ⭐️ 別のグループなのでelseの下も実行
+
+### else if - else
+- if
+- else if
+- else
+
+    ⭐️ 1つのグループなので1つしか実行されない
+
+### else if -if
+- if
+- else if
+- if ⭐️
+
+    ⭐️ 上の if-else if は終了
+    <br>
+    ⭐️ 下の if は新しい判定
+
+### ブロックがない場合
+⭐️ elseは一番近いifにくっつく
+```
+if (a)
+    if (b)
+        X;
+    else  // if(b) のグループ
+        Y;
+```
+
+    ⭐️ else は if(b) のもの
+## switch文（フォールスルー）
+case :
+<br>
+→ breakまで実行
+
+breakなし
+<br>
+→ フォールスルー
+
+⭐️ defaultはどこに書いてもOK
+（switch文・switch式どちらも）
+
+## switch式（フォールスルーなし）
+case ->
+
+→ フォールスルーなし（各行お化けbreak👻）
+
+⭐️default必須（全パターン網羅してれば不要）
+defaultはどこに書いてもOK⭕️
+
+⭐️ `};` セミコロン必須
+
+`{}`の中から値を返す（複数行）
+
+→ yield（1行なら不要） = return ⭐️ switch式のみ⚠️
+
+→ break ❌
+
+## 瞬殺{}がない
+{} がない
+- if
+- while
+- for
+
+⭐️ 次の1文`;`だけが対象（次の行ではない）
+<br>
+⭐️ インデントは関係ない
+
+do-while ⚠️
+```
+do
+.
+.
+.
+while (条件);
+```
+⭐️ do 〜 while(条件); 全体で1文
+
+## for文
+
+```
+for (①⭕️初期化; ②❌条件式; ③⭕️更新式)
+```
+
+⭐️ ①初期化 → カンマOK ⭕️
+<br>
+⭐️ ③更新式 → カンマOK ⭕️
+
+⭐️ ②条件式 → カンマNG ❌ 
+<br>
+❌ コンパイルエラー💥
+```
+for (... ; i < 3, j < 5 ; ...)
+❌              ↑💥
+```
+
+## 論理演算子（1はon、0はoff）
+1. `&` （AND/かつ）🔴
    
     →必ず両方見る
     <br>
-    → 両方trueでtrue
+    → 両方trueでtrue（両方1ならtrue）
 
-2. `^` 🔴
+2. `^` 🔴 （XOR/排他的論理和）
 
     →  必ず両方見る
     <br>
-    →  片方だけtrueでtrue
+    →  片方だけtrueでtrue（どちらかが1なら1）
 
-3. `|` （または）🔴
+3. `|` （OR/または）🔴
 
     → 必ず両方見る
     <br>
@@ -533,31 +696,23 @@ null
     <br>
     →どちらかtrueでtrue
 
+## ビット演算子
+```
+8 4 2 1
+↓ ↓ ↓ ↓
+1 0 1 1
+```
+0b0001 = 1
+<br>
+0b0010 = 2
+<br>
+0b0100 = 4
+<br>
+0b1000 = 8
+
 ### 優先順位（⭐ 左ほど先に計算）
 
 `&` → `^` → `|` → `&&` → `||`
-
-## switch文（フォールスルー）
-case :
-<br>
-→ breakまで実行
-
-breakなし
-<br>
-→ フォールスルー
-
-## switch式（フォールスルーなし）
-case ->
-
-→ フォールスルーなし（各行お化けbreak👻）
-
-→ ⭐️default必須（値を返す場合）
-
-`{}`の中から値を返す
-
-→ yield（1行なら不要） = return
-
-→ break ❌
 
 ## リテラル・変数宣言 瞬殺ルール
 英字 ⭕️
