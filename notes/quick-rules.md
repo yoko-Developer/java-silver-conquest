@@ -24,9 +24,10 @@
 
 → まず左を見る👀
 
-## 左右判定（継承・implements）
+# 左右判定（継承・implements）
 ⭐️目印
-### 親型 = new 子型
+
+## 親型 = new 子型
 ```
 例
 A a = new B();
@@ -49,16 +50,14 @@ List l = new ArrayList();
 
 aの宣言を見る
 
----
-### 左 （フィールド）
+## 左 （フィールド）
 ```
 A a = new B();
 a.num
 ```
 → Aのnum ⭕️
 
----
-### 右（メソッド）
+## 右（メソッド）
 ```
 A a = new B();
 a.test();
@@ -71,7 +70,7 @@ a.test();
 
 コンパイルエラー💥
 
-## this （同じ名前）
+# this （同じ名前）
 
 同じ名前のフィールドへアクセス
 
@@ -82,7 +81,7 @@ a.test();
 ❌ value = value;
 （引数 ← 引数）
 
-## override
+# override
 
 同じ名前
 <br>
@@ -102,21 +101,21 @@ a.test();
 <br>
     ❌ override
 
-## abstract （抽象メソッド）
+# abstract （抽象メソッド）
 ⭕️ abstract → ; 必須 （中身なし）
 
 ❌ abstract → {} （中身あり）
 
-❌ `final` 
+❌ final
 
-❌ `new`
+❌ new
 
-### 具象メソッド
+## 具象メソッド
 ⭕️ 普通メソッド → {}
 
 ❌ 普通メソッド → ;
 
-### public abstract 👻
+## public abstract 👻
 
 Interface（型情報）は必ず`public`
 
@@ -128,7 +127,7 @@ protected ❌
 <br>
 private ❌
 
-### class
+## class
 家系図👨‍👩‍👧‍👦
 
 親は1人
@@ -141,7 +140,7 @@ class extends A,B ❌
 
 ❌ ママ犬が2人いる家系図にはできない🐶
 
-### interface
+## interface
 能力カード🎫
 
 何枚でもOK
@@ -157,7 +156,7 @@ implements A,B ⭕
 interface C extends A, B ⭕
 ```
 
-## interface
+# interface
 default：予備
 
 ⭐️ defaultある？
@@ -181,7 +180,7 @@ default：予備
 <br>
 なければコンパイルエラー💥
 
-## default競合⚔️
+# default競合⚔️
 
 ```
 interface A
@@ -207,7 +206,7 @@ override必須
 <br>
 コンパイルエラー💥
 
-## continue （到達不能）
+# continue （到達不能）
 
 ⭕️ continue;
 } // ループの外へ
@@ -215,7 +214,7 @@ override必須
 ❌ continue;
 処理 // 到達不能コード
 
-## String （immutable・不変の掟）
+# String （immutable・不変の掟） 📖👀
 - replace
 - concat
 - substring
@@ -224,14 +223,14 @@ override必須
 
 ❌ a.concat("A"); （aは変わらない）
 
-## コンストラクタ（親子の実行順）
+# コンストラクタ（親子の実行順）
 new 子()
 
 → 親 → 子
 
 ⭐️ super() 自動追加
 
-## override修飾子（アクセス修飾子の広さ）
+# override修飾子（アクセス修飾子の広さ）
 
 継承（extends） → 親 ≤ 子
 
@@ -240,7 +239,7 @@ new 子()
 
 - インターフェース（implements） → 実装クラスは`public` のみ ⭕️
 
-## ⭐️overrideできない
+# ⭐️overrideできない
 
 private （親） ❌
 <br>
@@ -258,7 +257,7 @@ static （両方） ❌
 <br>
 → overrideではない
 
-### 瞬殺⭐️見る場所
+## 瞬殺⭐️見る場所
 ```
 ()ある？
 ↓
@@ -271,7 +270,7 @@ static （両方） ❌
 ⭐️親のメソッド使う
 ```
 
-## 瞬殺⭐️ぬるぽを探せ
+# 瞬殺⭐️ぬるぽを探せ
 配列の参照型
 
 ```
@@ -288,7 +287,7 @@ null, null, null` 中身null
 
 ⭐️ ぬるぽ探せ‼️ 👀
 
-## 瞬殺 ⭐️ returnを探せ（equals）
+# 瞬殺 ⭐️ returnを探せ（equals） 📖👀
 ` **equals** 問題
 
 1. return を探す
@@ -307,7 +306,7 @@ null, null, null` 中身null
     this = A
     obj = B
 
-## 瞬殺 ⭐️ AllayList
+# 瞬殺 ⭐️ AllayList
 add
 <br>
 → 増える
@@ -330,19 +329,19 @@ obj = 右
 
 equalsでもアドレス比較（==）になる
 
-## try-with-resources
+# try-with-resources
 ⭐️ `try()` closeは逆
 
 close → catch → finally
 
-## catch 
+# catch 
 小さい → 大きい ⭕
 
 大きい → 小さい ❌💥
 （到達不能）
 
 
-## 配列 clone()
+# 配列 clone()
 
 `array1.clone()`
 
@@ -352,47 +351,38 @@ close → catch → finally
 
 ❌ array1 == array2
 
-## 配列 （罠集😈）
+# 配列 （罠集😈） 📖👀
 - []の位置は自由
 - 最初の要素数は必須
 - 要素数と初期化子は併用不可[]{} （両方数字があるとダメ）
 - {}があれば空で良い
 
-## 二次元配列
-`new int[2][4]`
-
-ガタガタOK ⭕️
+# 二次元配列
+[][] は二次元配列だよ〜の意味
 ```
-array[0] = new int[100];
-array[1] = new int[2];
+String[][] array
 ```
-
-`new int[2][4] array.length`
-
-→ 外側の長さ（1番目の数字）
-
-→ 2
-
-⭐️最初の数字 → 行数
-
-⭐️次の数字 → 列数
-
-```
-[ ][ ][ ][ ] → 1行目
-[ ][ ][ ][ ] → 2行目
-```
-
-```
-new int[2][4]
-
 array.length
-→ 最初の数字
+<br>
+→ 階数（外側の要素数）
 
-array[0].length
-→ 2番目の数字
-```
+array[i].length
+<br>
+→ その階の部屋数
 
-## package（クラスの住所📮）
+array[i][j]
+<br>
+→ 中身の値
+
+外側for
+<br>
+→ 階を回る
+
+内側for
+<br>
+ → 部屋を回る
+
+# package（クラスの住所📮）
 
 名前空間
 <br>
@@ -402,7 +392,7 @@ packageなし
 <br>
 → 無名パッケージ（パッケージに属している）
 
-## getter / setter
+# getter / setter
 
 set
 
@@ -412,7 +402,7 @@ set
 
 ❌ value = value;
 
-## コマンド
+# コマンド
 
 1. javac （コンパイル）
 
@@ -420,7 +410,7 @@ set
 
 `javac Sample.java`
 
-### c-java
+## c-java
 ```
 javac
 ↓
@@ -436,7 +426,7 @@ cいる👀
 
 `java Sample`
 
-### javaクラス
+## javaクラス
 ```
 java
 ↓
@@ -460,12 +450,11 @@ cいない👀
 
 `/` ❌
 
-### クラスパスの最後
+## クラスパスの最後
 
 パッケージ名.クラス名 ⭕️
 
-
-## javaコマンドの起動パラメータ
+# javaコマンドの起動パラメータ
 args.length
 
 ⭐️スペース区切り = 1個ずつ
@@ -482,16 +471,16 @@ args.length
 ↓
 "
 ```
-## var
+# var 📖👀
 ⭕️ ローカル変数のみ
-
+<br>
 ❌ フィールド
-
+<br>
 ❌ 引数
-
+<br>
 ❌ 戻り値
 
-### varの型推論
+## varの型推論
 右辺で型決定👀
 
 `var a = new B();`
@@ -504,14 +493,14 @@ args.length
 
 ⭐️ varで決まった型は変わらない
 
-## """（テキストブロック）
+# """（テキストブロック） 📖👀
 最初の `”””` の次は改行必須⚠️
 
 最後は改行しなくてOK ⭕️
 
 改行(Enter)も1文字とカウント
 
-## instanceof
+# instanceof
 お前は誰だ？
 
 親 instanceof 子
@@ -526,7 +515,8 @@ null
 無関係
 💥 コンパイルエラー
 
-## if文
+# if文
+## 定義方法 📖👀
 ```
 if( 条件式 ) { 
   処理
@@ -555,8 +545,8 @@ Aは不合格
 
  NO  → false側
 
- ## if / else / elseif
- ```
+# if / else / elseif
+```
  if (...) {
 }
 else {  // ここが実行されても
@@ -572,14 +562,14 @@ if {    // その下も判定される
 
     ⭐️ 別のグループなのでelseの下も実行
 
-### else if - else
+## else if - else
 - if
 - else if
 - else
 
     ⭐️ 1つのグループなので1つしか実行されない
 
-### else if -if
+## else if -if
 - if
 - else if
 - if ⭐️
@@ -588,7 +578,7 @@ if {    // その下も判定される
     <br>
     ⭐️ 下の if は新しい判定
 
-### ブロックがない場合
+## ブロックがない場合
 ⭐️ elseは一番近いifにくっつく
 ```
 if (a)
@@ -599,10 +589,10 @@ if (a)
 ```
 
     ⭐️ else は if(b) のもの
-## switch文（フォールスルー）
+# switch文（フォールスルー） 📖👀
 case :
 <br>
-→ breakまで実行
+→ break出さずに抜ける
 
 breakなし
 <br>
@@ -611,7 +601,7 @@ breakなし
 ⭐️ defaultはどこに書いてもOK
 （switch文・switch式どちらも）
 
-## switch式（フォールスルーなし）
+# switch式（フォールスルーなし） 📖👀
 case ->
 
 → フォールスルーなし（各行お化けbreak👻）
@@ -627,7 +617,27 @@ defaultはどこに書いてもOK⭕️
 
 → break ❌
 
-## 瞬殺{}がない
+# ラベル 📖👀
+
+⭐️ ラベルは文(statement)に付けられる
+
+⭕️ for
+<br>
+⭕️ while
+<br>
+⭕️ do-while
+<br>
+⭕️ switch
+<br>
+⭕️ try
+<br>
+⭕️ return
+<br>
+⭕️ 代入
+<br>
+⭕️ 式
+
+# 瞬殺{}がない
 {} がない
 - if
 - while
@@ -647,17 +657,17 @@ while (条件);
 ```
 ⭐️ do 〜 while(条件); 全体で1文
 
-## for文
+# for文
 
 ```
 for (①⭕️初期化; ②❌条件式; ③⭕️更新式)
 ```
 
-⭐️ ①初期化 → カンマOK ⭕️
+①初期化 → カンマOK ⭕️
 <br>
-⭐️ ③更新式 → カンマOK ⭕️
-
-⭐️ ②条件式 → カンマNG ❌ 
+③更新式 → カンマOK ⭕️
+<br>
+②条件式 → カンマNG ❌💥 
 <br>
 ❌ コンパイルエラー💥
 ```
@@ -665,7 +675,20 @@ for (... ; i < 3, j < 5 ; ...)
 ❌              ↑💥
 ```
 
-## 論理演算子（1はon、0はoff）
+⭐️ 条件式省略OK ⭕️
+<br>
+→ 自動的に**true**
+
+`for (;;)`
+<br>
+→ **true**は無限ループ🌀
+
+⭐️ 更新式省略OK ⭕️
+
+# 拡張for文
+for (型 変数 : 配列) 📖👀
+
+# 論理演算子（1はon、0はoff） 📖👀
 1. `&` （AND/かつ）🔴
    
     →必ず両方見る
@@ -696,7 +719,7 @@ for (... ; i < 3, j < 5 ; ...)
     <br>
     →どちらかtrueでtrue
 
-## ビット演算子
+# ビット演算子
 ```
 8 4 2 1
 ↓ ↓ ↓ ↓
@@ -710,11 +733,11 @@ for (... ; i < 3, j < 5 ; ...)
 <br>
 0b1000 = 8
 
-### 優先順位（⭐ 左ほど先に計算）
+## 優先順位（⭐ 左ほど先に計算）
 
 `&` → `^` → `|` → `&&` → `||`
 
-## リテラル・変数宣言 瞬殺ルール
+## リテラル・変数宣言 瞬殺ルール 📖👀
 英字 ⭕️
 
 数字 ⭕️
@@ -727,7 +750,7 @@ $ ⭕️
 `_` `$` 以外の記号
 全部ダメ ❌
 
-## static / インスタンス
+# static / インスタンス
 インスタンス → static ⭕️
 static → インスタンス ❌
 
@@ -745,12 +768,12 @@ static → インスタンス ❌
 
     ＝newの数だけ増える
 
-### staticメソッド
+## staticメソッド
 this 禁止 ❌
 
 インスタンス変数を直接見れない ❌
 
-### 初期化順序
+## 初期化順序
 `new クラス名()` の数だけ実行
 
 ① `static {}` ：  最初に1回だけ
@@ -767,28 +790,28 @@ staticメソッド発見！
 触ってたら怪しい
 ```
 
-## オーバーロード（同じ名前のメソッドを増やす）
+# オーバーロード（同じ名前のメソッドを増やす）
 引数の`型`、`個数`、`順番`のどれかが違う
 
 ※変数名は関係ない
 
-### 呼び出しルール
+## 呼び出しルール
 - そのまま一致が最優先
 - 変換が必要なら後回し
 - 同点なら曖昧 → コンパイルエラー
 
-## ボクシング（自動変換）🎁
+# ボクシング（自動変換） 🥊🎁
 
 int → Integer ： オートボクシング
 <br>
 Integer → int ： アンボクシング
 
-## リテラルの接尾辞（L / F）
+# リテラルの接尾辞（L / F）
 L：longの大きい数で必要
 <br>
 F：floatの小数で必要
 
-### protected
+## protected
 同じパッケージ → OK
 
 別パッケージ → 要注意⚠️
@@ -797,13 +820,12 @@ F：floatの小数で必要
 <br>
 親型変数経由 ❌
 
-## キャスト（型変換）
-
-### char の自動変換
+# キャスト（型変換）
+## char の自動変換
 ⭐️大は小を兼ねない
 
 小→大 ⭕️
-
+<br>
 大→小 ❌（キャスト必要）
 
 ただし
@@ -842,7 +864,7 @@ non-sealed 🔓
 <br>
 → 継承自由（誰でもOK ⭕️ → 普通のクラス解禁）
 
-## do-while
+# do-while
 
 ⭐ do と while の間は必ず1回実行
 
@@ -858,21 +880,21 @@ while(条件)
 
 **条件は後で見る👀**
 
-## 進数
+# 進数 📖👀
 0b 〜 ➡️ 2進数（0と1だけ⭕️）
 
 0 〜  ➡️ 8進数（0〜7だけ⭕️）
 
 0x 〜 ➡️ 16進数（0〜9、A〜Fなら⭕️）
 
-## Silver最終兵器✏️
+# Silver最終兵器✏️
 
 問題を見る
 ↓
 
 何の問題？
 
-## _（アンダースコア）
+# _（アンダースコア）
 ⭕️ 数字と数字の間
 
 ❌ 先頭

@@ -1,6 +1,6 @@
 # Java Silver 単語帳
 
-## StringBuilder
+# StringBuilder
 ⭐️ mutable（可変）
 
 変更系メソッドで元が変わる
@@ -25,13 +25,13 @@
   <br>
   16
 
-## String
+# String
 ⭐️ mutable（可変）
 
 変更系メソッドでも元は変わらない
 
-### 位置
-- charAt(i)
+## 位置
+- charAt(i) 📖👀
   <br>
   **取りに行く**
   <br>
@@ -45,8 +45,8 @@
   <br>
   ⭐️なければ-1
 
-### 判定
-- startsWith("ab")
+## 判定
+- startsWith("ab") 📖👀
   <br>
   先頭が一致するか（true/false）
 
@@ -54,18 +54,18 @@
   <br>
   引数の文字で終わっているか
 
-### 置換
-- replace("a", "b")
+## 置換
+- replace("a", "b") 📖👀
   <br>
   aをbに置き換え
   <br>
   ⭐️新しいStringを返す（元のStringは変わらない）
 
-- replace(1,3,"a")
+- replace(1,3,"a") 📖👀
   <br>
   1以上3未満をaに入れ替える
 
-### 切り出し
+## 切り出し
 - substring(a, b)
   <br>
   a以上b未満
@@ -74,8 +74,8 @@
   <br>
   aから後ろを切り出し
 
-### 文字列操作
-- concat
+## 文字列操作
+- concat 📖👀
   <br>
   文字列の最後に文字をくっつける
 
@@ -92,7 +92,7 @@
   <br>
   文字数を取得
 
-- intern()
+- intern() 📖👀
   <br>
   コンスタントプール（秘密の倉庫）を使う
 
@@ -100,7 +100,7 @@
   <br>
   → true
 
-## 型
+# 型
 - instanceof
   <br>
   型チェック
@@ -132,7 +132,7 @@
   int... nums
   ```
 
-## コピー
+# コピー
 - clone()
   <br>
   配列をコピーする
@@ -149,12 +149,12 @@
   <br>
   → true
 
-## switch
+# switch
 - yield
   <br>
   switch式で値を返す
 
-## 継承
+# 継承
 - extends
   <br>
   継承
@@ -190,7 +190,7 @@
   <br>
   継承自由に戻す（普通のクラス）
 
-## 例外
+# 例外
 - Exception例外クラスの親
   <br>
   例外クラスの親
@@ -241,7 +241,7 @@
   <br>
   static初期化失敗
 
-## 数学
+# 数学
 - Math.max(a,b)
   <br>
 → 大きい方
@@ -250,7 +250,7 @@
   <br>
 → 小さい方
 
-## try-with-resources
+# try-with-resources
 
 - AutoCloseable
   <br>
