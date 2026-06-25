@@ -5,7 +5,7 @@
 4. 呼ばれるメソッド探す
 5. コンパイルエラー候補見る
 
-## 左右判定（継承・implements）
+# 左右判定（継承・implements）
 `A a = new B()`
 
 ⭐️呼び出すメソッド探し
@@ -18,23 +18,23 @@
 
   - フィールド → 左見る
 
-## implementsあったら
+# implementsあったら
 1. public？（同じか緩い？）
 2. メソッド名同じ？
 3. 引数同じ？
 4. abstractなら未実装OK
 
-## 例外
+# 例外
 1. throw 見る
 2. catch 上から探す（ヒットしたらcatch終わり）
 3. finally 基本実行
 
-### try-catch-finally（昔のやり方）
+## try-catch-finally（昔のやり方）
 1. try（爆発）
 2. catch（バグ捕獲）
 3. finally（ここで人間が手で蓋を閉める！）
 
-### try-with-resources
+## try-with-resources
     try() ⭐️目印：これあれば👀
 1. close（） 最初
 2. catch
@@ -61,7 +61,7 @@ IndexOutOfBoundsException
 └─ StringIndexOutOfBoundsException
 ```
 
-## String
+# String
 - String
   
   →immutable（不変）
@@ -69,7 +69,7 @@ IndexOutOfBoundsException
 
     →新しいString作るだけ
 
-## intern()
+# intern() 📖👀
 Stringのコンスタントプールを使う
 
 ⭐️ newとリテラルの比較でもtrueになる
@@ -82,31 +82,12 @@ Stringのコンスタントプールを使う
 
 → true ⭕️
 
-## equals / ==
+# equals / ==
 - == ：アドレス
 - .equals() ：値
-  
-### 配列 clone()
-外側だけコピー
-```
-array 1 == array2; // false❌
-```
 
-中身の配列は同じアドレス
-```
-array1[1] == array2[1]; // true
-```
-
-配列の出力 → ハッシュコード
-
-`System.out.println(array);`
-
-要素の出力 → 0
-
-`System.out.println(array[0]);`
-
-## 配列 （定義方法）
-### 宣言
+# 配列 （定義方法）
+## 宣言
 
 ⭐️ [] の位置はどこでも ⭕️
 
@@ -124,7 +105,7 @@ int a[][]; ⭕
 int a[3]; ❌
 ```
 
-### 宣言時
+## 宣言時
 ⭐️ 要素数は書かない
 
 ```
@@ -133,7 +114,7 @@ int[] a; ⭕
 int a[3]; ❌ 💥 コンパイルエラー
 ```
 
-### 初期値
+## 初期値
 
 |  データ型  | 初期値  |
 |:---------:|:------------:|
@@ -142,7 +123,7 @@ int a[3]; ❌ 💥 コンパイルエラー
 | double   | 0.0    |
 | boolean   | false   |
 
-### インスタンス生成時（右側）
+## インスタンス生成時（右側）
 ⭐️ 要素数は書かなきゃダメ ❌
 ```
 int[] a = new int[3] ⭕️
@@ -186,7 +167,198 @@ int a[][] = {}; ⭕️
 int[][] a = new int[][]{}; ⭕️
 ```
 
-### nullの罠😈
+# 二次元配列
+住所を指定して中身を取る
+
+array[i][j]
+- i = 階
+- j = 部屋
+
+```
+int array[][] = {
+    {1,2},
+    {2,3,4}
+};
+```
+```
+array[0][0] → 1
+array[0][1] → 2
+
+array[1][0] → 2
+array[1][1] → 3
+array[1][2] → 4
+```
+## length
+
+array.lengthは
+<br>
+階数（外側の要素数）
+<br>
+→ 2 （2階建てだから）
+```
+array[0].length
+⭐️ 0階の部屋数→2
+```
+```
+array[1].length
+⭐️ 1階の部屋数→3
+```
+
+## new int[][]
+`new int[2][4]`
+
+→ 2階建て、各階4部屋
+
+```
+[ ][ ][ ][ ] ← 0階
+[ ][ ][ ][ ] ← 2階
+```
+⭐️最初の数字 → 行数
+<br>
+⭐️次の数字 → 列数
+
+## ガタガタOK ⭕️
+**int[][] array = new int[2][];**
+```
+array[0] = new int[100];
+array[1] = new int[2];
+```
+各階の部屋数は同じでなくてもOK
+
+```
+String[][] array = { { "A", "B", "C" } };
+```
+左辺：看板
+<br>
+右辺：マンション構造
+
+## for文ミックス
+⭐️ 外側for → 階を回る（縦）
+<br>
+⭐️ 内側for → 部屋を回る（横）
+
+```
+for (int i = 0; i < array.length; i++)
+→ 階を回る
+```
+```
+for (int j = 0; j < array[i].length; j++)
+→ 部屋を回る
+```
+
+## 配列 clone()
+外側だけコピー
+```
+array 1 == array2; // false❌
+```
+
+中身の配列は同じアドレス
+```
+array1[1] == array2[1]; // true
+```
+
+配列の出力 → ハッシュコード
+
+`System.out.println(array);`
+
+要素の出力 → 0
+
+`System.out.println(array[0]);`
+
+⭐️ {}  は値を並べる
+```
+int[][] array = {
+    {1,2},   // 0階（行）
+    {2,3,4}  // 1階（行）
+};           // ２階建て✨
+```
+⭐️ [] は添字（住所）を書く
+```
+array[1][2]  // 1階2号室
+```
+
+# switch
+
+⭐️ ヒットしたcaseから開始
+<br>
+↓
+<br>
+⭐️ breakまで落ち続ける
+
+## switch文
+
+⭐️ ヒットしたら終わりではない
+<br>
+⭐️ ヒットしたcaseへワープ
+<br>s
+⭐️ breakにぶつかったら出さずに抜ける
+
+switch (???)
+
+使える値 ⭕️ 📖👀
+- char
+- byte
+- short
+- int
+- String
+- enum
+
+使えない値 ❌ 📖👀
+- long ❌
+- loat / double ❌
+- boolean ❌
+
+    ⭐️ 大きすぎる整数、小数点は ❌
+
+⭐️ defaultはどこに書いてもOK
+（switch文・switch式どちらも）
+
+## caseに指定できる値
+⭐️ コンパイル時の定数のみ
+- final ⭕️
+- リテラル値 ⭕️
+- コンパイル時に計算できる式 ⭕️
+- 変数 ❌
+
+ひっかけ問題
+```
+⭕️ 1行で宣言＋代入
+final int NUM = 10; 
+```
+```
+❌ 2行に分かれてる
+final int NUM;
+NUM = 10;
+```
+
+## switch文はフォールスルー
+⭐️ break がないと次の case に落ちる
+```
+switch (num) {
+    case 1:
+    case 2:
+        System.out.println("A");
+}
+
+// num = 1はA
+```
+
+⭐️ break がないと最後まで実行
+```
+case 1:
+    A
+case 2:
+    B
+default:
+    C   
+```
+```
+答え
+A
+B
+C
+```
+# nullの罠😈
 ```
 String s = null; ⭕️
 ```
@@ -207,8 +379,8 @@ null.フィールド ❌
 <br>
 → ぬるぽ ❌
 
-## ArrayList
-### 特徴
+# ArrayList
+## 特徴
 - 重複OK ⭕️
 - null OK ⭕️
 - スレッドセーフではない ❌
@@ -217,27 +389,27 @@ null.フィールド ❌
   <br>
  → どんな型でも入れられるバッグ
 
-### 追加・変更
+## 追加・変更
 - add(value)
   <br>
 → 末尾追加
 - add(index, value) 
   <br>
- → 指定位置に追加（位置,値）
+ → 指定位置に追加（位置,値） 📖👀
 - set(index, value)
   <br>
   → 置き換え
 
-### 削除
+## 削除
 - remove(value)
   <br>
   → 
   
-  ⭐️ remove判定はequals()
+  ⭐️ remove判定はequals() 📖👀
   <br>
   equals()の中身次第で削除される要素が決まる
 
-### 不変 ⚠️
+## 不変 ⚠️
 `List.of(...)`
 
 ⭐️変更不可
@@ -257,9 +429,8 @@ null.フィールド ❌
 
 ⭐️全部OK
 
-
-### ひっかけ💥
-   ⭐️ for-each中にadd/remove（コレクション変更）
+## ひっかけ💥
+   ⭐️ for-each中にadd/remove（コレクション変更） 📖👀
 
    [A,B,C,D,E]
 <br>
@@ -287,7 +458,23 @@ null.フィールド ❌
     ↓
     Aだけ出力（Bも消える）👻
 
-## コンストラクタ（親から先）
+# インクリメント
+
+⭐️ 左から順番
+
+in a = 10;
+- a++ → 今の値を使う（10評価） → 後で増える
+- ++a → 先に増える → その値を使う
+
+⭐️評価とは「置くだけ」のこと
+
+長い式は
+<br>
+「使われる値」を横に書く
+<br>
+→ 最後に足し算や引き算
+
+# コンストラクタ（親から先）
 1. new B() // 子
 
     ↓
@@ -298,17 +485,17 @@ null.フィールド ❌
 
 3. 子(B)コンストラクタ
 
-## 戻り値（void以外で宣言）
+# 戻り値（void以外で宣言）
 - 全ルートで`return`必須
 - `boolean`には`void`なし
 - `throw`終了なら`return`なくてOK
 
-## メソッド呼び出し
+# メソッド呼び出し
 - static → `クラス名.メソッド名`
 - default → `インターフェース名.super.メソッド名()`
 - static → this使えない ❌
 
-## sealed + permits（継承できる子を制限）
+# sealed + permits（継承できる子を制限）
 子は必須
 - final
 - sealed
@@ -317,7 +504,7 @@ null.フィールド ❌
 子もsealed
 - permits必要
 
-## override（上書き）
+# override（上書き）
 - ()ある？
   
   → メソッド → 右(new側)
@@ -331,15 +518,15 @@ null.フィールド ❌
 2. 引数同じ？
 3. public弱くなってない？
 
-## && と ||（左だけ）
+# && と ||（左だけ）
 - `&&` → 左falseなら右見ない
 - `||` → 左trueなら右見ない
 
-## & と |（両方見る）
+# & と |（両方見る）
 - `&` と `|` → 必ず両方実行
 - `|` どっちかtrue
 
-## abstract（抽象クラス=未完成）
+# abstract（抽象クラス=未完成）
 - abstract class
   
     → `final` ❌
@@ -356,7 +543,7 @@ null.フィールド ❌
 
   → classもabstract必要
 
-### ⭕️❌判定
+## ⭕️❌判定
 
 ⭕ abstract class
 - 処理なしOK
@@ -369,7 +556,7 @@ null.フィールド ❌
 
 ---
 
-## abstractメソッド(抽象メソッド)
+# abstractメソッド(抽象メソッド)
 
 abstractあり(抽象メソッド)
 -  `;` 必須
@@ -388,7 +575,7 @@ abstractなし(具象メソッド)
 
 → classもabstract必須
 
-## ループ
+# ループ
 
 ⭐️出力が continue / break の上か下か見る
 - continue（その周回終了）
@@ -408,7 +595,7 @@ abstractなし(具象メソッド)
 
 - continue;の次の行に実行コードは書けない❌（到達不能コード）
 
-## 二次元配列
+# 二次元配列
 例
 ```
 String[][] array = {
@@ -448,7 +635,113 @@ data[1][2]
 → 2行目3列目
 ```
 
-## _（アンダースコア）
+# do-while
+*doとwhileの間は必ず1回実行される🐱*
+
+```
+do {
+    // 繰り返し処理
+} while (順不要);
+
+```
+```
+do {
+    System.out.println("にゃん🐱");
+} while(false);
+```
+
+出力：にゃん🐱
+<br>
+↓
+<br>
+条件は後で見る👀
+
+## while
+条件 → 処理
+## do-while
+処理 → 条件
+
+# for文
+## 初期化式
+```
+for (初期化文; 条件文; 更新文) {
+    // 繰り返し処理
+}
+```
+⭐️ 初期化式で違う型は使えない ❌💥
+```
+    ❌💥
+    int i = 1, long j = 2
+```
+
+## 条件式省略
+
+### ⭐️ 条件式と初期化式は省略可 ⭕️
+```
+for (;;) // 無限ループ🌀
+```
+    条件式省略
+        ↓    
+    true扱い
+        ↓
+    無限ループ🌀
+
+    ⭐️true 又は 空っぽの時は無限ループ🌀
+
+## 有効範囲
+
+⭐️ for文初期化式の有効範囲に注意⚠️
+
+```
+for () {
+    // ()で作った変数はブロック内のみ有効⚠️
+}
+```
+
+# 拡張for文
+
+```
+for (型 変数名 : 配列) {
+    // 繰り返し処理
+}
+```
+
+⭐️ 配列から1個ずつ取り出す
+
+⭐️ 変数を書き換えても 配列の中身は変わらない
+
+```
+int[] array = {1,2,3};
+
+for (int num : array) {
+    System.out.println(num);
+}
+```
+## 二次元配列ミックス
+```
+String[][] array = {
+    {"A","B","C"}
+};
+
+for (String[] row : array) {
+}
+```
+
+⭐️ 二次元配列から1個取り出すと
+[] が1個減る
+
+String[][]
+<br>
+↓
+<br>
+String[]
+
+# for 二重ループ
+外側 → 行移動
+
+内側 → 列移動
+
+# _（アンダースコア）
 ⭕️ 数字の間
 - 123_456
 - 0b0_1
@@ -465,50 +758,24 @@ data[1][2]
 - 999_L
 - 0x_52
 
-## do-while
-*doとwhileの間は必ず1回実行される🐱*
-
-```
-do {
-    System.out.println("にゃん🐱");
-} while(false);
-```
-
-出力：にゃん🐱
-<br>
-↓
-<br>
-条件は後で見る👀
-
-### while
-条件 → 処理
-### do-while
-処理 → 条件
-
-## for 二重ループ
-外側 → 行移動
-
-内側 → 列移動
-
-## instanceof
+# instanceof
 → 型チェック
 
-instanceof String str（instanceOfが作った変数）
-
+instanceof String str（instanceOfが作った変数）<br>
 → true側だけ str使える
 
-## var
+# var 📖👀
 - ローカル変数のみOK ⭕️
 - 初期化必須⚠️
 - 引数 ❌
 - 型変更NG ❌
 - null単体NG ❌
 
-## this
+# this
 - 同じ名前 x なら → ローカル変数優先
 - this.x → フィールド
 
-## オーバーライド
+# オーバーライド
 
 ⭐️チェック
 1. メソッド名同じ？
@@ -516,7 +783,7 @@ instanceof String str（instanceOfが作った変数）
 3. 戻り値は 同じ or 
 4. public弱くなってない？
 
-## オーバーロード
+# オーバーロード
 メソッド名同じ
 
 引数違い
@@ -524,7 +791,7 @@ instanceof String str（instanceOfが作った変数）
 
 ⭐️呼び出し：引数の型が一致する方（近い方）
 
-### メソッド呼び出し
+## メソッド呼び出し
 ◽️どのメソッド呼ぶ？
 - 左型で探す
 （オーバーロード）
@@ -532,10 +799,11 @@ instanceof String str（instanceOfが作った変数）
 → 右(new側)
 （オーバーライド）
 
-### コンストラクタ呼び出し
+## コンストラクタ呼び出し
 - super()：親のコンストラクタ
 - this()：自分のクラスの別ブロックのコンストラクタ
-## catch順
+
+# catch順
 子 → 親
   
     狭い罠（チワワ） → 広い罠（動物）
@@ -544,7 +812,7 @@ instanceof String str（instanceOfが作った変数）
 - 下（狭い罠）のcatch到達不能
 - コンパイルエラー
 
-## 継承
+# 継承
 extends：子 → 親 → その親（全員呼ばれる）
 
 super → 親
@@ -553,7 +821,7 @@ finalメソッド → override不可❌
 
 super() → 親コンストラクタ
 
-## super
+# super
 - コンストラクタ：super() 省略OK
 （自動追加）
 
@@ -562,7 +830,7 @@ super() → 親コンストラクタ
  
   ※オーバーライドなしの場合
 
-## アクセス修飾子
+# アクセス修飾子
 - override（上書き）
 
     親 <= 子（同じか広く）
@@ -592,7 +860,7 @@ super() → 親コンストラクタ
     | なし        | 同じ家のみ         |
     | private   | 同じ部屋だけ               |
 
-## コマンド
+# コマンド
 
 1. javac（コンパイル）
 
@@ -626,7 +894,7 @@ Compile
 
 `java Sample.class ❌`
 
-### javaクラス
+## javaクラス
 java
 <br>
 ↓
@@ -648,11 +916,56 @@ cいない👀
 
 `java Sample.java ⭕️`
 
-## キャスト
+# 型変換
+byte
+ <br>
+ ↓
+ <br>
+short
+ <br>
+ ↓
+ <br>
+int
+ <br>
+ ↓
+ <br>
+long
+ <br>
+ ↓
+ <br>
+float
+ <br>
+ ↓
+ <br>
+double
+
+byte
+<br>
+-128 ～ 127
+
+⭐️ 小→大 ⭕️
+
+⭐️ 大→小 ❌（キャスト必要）
+
+long が混ざる
+<br>
+→ 結果も long
+
+float は F が必要
+
+float f = 10.0F ⭕️
+<br>
+float f = 10.0  ❌
+
+int c = 6L;💥
+<br>
+値（大） → 小（箱）だからキャスト必要
+
+# キャスト
 大きい箱から小さい箱に変更 →
 キャスト必須
 
-### charの自動変換
+## charの自動変換
 char → int ⭕️
 <br>
 char → long ⭕️
@@ -666,19 +979,35 @@ char → byte ❌
 <br>
 char → short ❌
 
-### to char
+## to char
 byte → char ❌
 <br>
 short → char ❌
 
 int → char ❌（キャスト必要）
 
-## getter/setter
+# getter/setter
 - getter：privateで値を見るボタン（値取得）
 - setter：privateな値を変えるボタン（値変更）
 
+# 真偽値（boolean）の比較（関係演算子）
+boolean
 
-## 三項演算子（if の1行版）
+`==` ⭕️
+<br>
+`!=` ⭕️
+
+数値以外の比較：等符合 ❌
+<br>
+`< ` ❌
+<br>
+`>`  ❌
+<br>
+`<=` ❌
+<br>
+`>=` ❌
+
+# 三項演算子（if の1行版） 📖👀
 条件 ? trueの時 : falseの時
 
 例
@@ -693,7 +1022,7 @@ YES → 100
 
 NO  → 200
 
-## StringBuilder
+# StringBuilder
 
 new StringBuilder()
 <br>
