@@ -24,6 +24,15 @@
 3. 引数同じ？
 4. abstractなら未実装OK
 
+# throw / throws
+
+- throw
+  <br>
+→ 今、例外を投げる💥
+- throws
+  <br>
+→ 投げるかも宣言📢
+
 # 例外
 1. throw 見る
 2. catch 上から探す（ヒットしたらcatch終わり）
@@ -490,10 +499,43 @@ in a = 10;
 - `boolean`には`void`なし
 - `throw`終了なら`return`なくてOK
 
+⭐️voidは引数に使えない
+
 # メソッド呼び出し
-- static → `クラス名.メソッド名`
+- static → `クラス名.メソッド名()`
+- インスタンス → 変数名.メソッド名()
 - default → `インターフェース名.super.メソッド名()`
 - static → this使えない ❌
+
+### 呼び出しルール
+
+⭐️フィールド → ()なし
+<br>
+⭐️ メソッド → ()あり
+
+```
+Sample sample = new Sample();
+
+sample.hello();   // インスタンスメソッド
+Sample.print();   // staticメソッド
+```
+⭐️引数の数・型は宣言と一致 ⚠️
+<br>
+→ 違うとコンパイルエラー💥
+
+### ⭐️ メソッド宣言
+
+戻り値の型は必須 ⚠️
+
+void / int / String ...
+
+```
+void sample() { } ⭕️
+int sample() { } ⭕️
+String sample() { } ⭕️
+
+sample() { } ❌
+```
 
 # sealed + permits（継承できる子を制限）
 子は必須
@@ -763,6 +805,64 @@ String[]
 
 instanceof String str（instanceOfが作った変数）<br>
 → true側だけ str使える
+
+# ガベージコレクション🗑️
+
+⭐️ ゴミになるのは Object（ベッド）
+<br>
+人（変数）はゴミにならない ⚠️
+
+```
+Object a = new Object(); // 🐶ALBAのベッド🛏️①
+Object b = new Object(); // 🐶VANILLAのベッド🛏️②
+Object c = a;            // 🐻c不審者登場（ALBAと同じベッド）
+```
+
+```
+ALBA(a) ──┐
+            ├──→ 🛏️①
+c🐻 ────┘
+
+VANILLA(b) ───→ 🛏️②
+```
+
+```
+a = null;
+ALBA😢 ベッドを手放す
+
+c🐻 ─────→ 🛏️①
+
+VANILLA ─→ 🛏️②
+
+🛏️①は c が使ってるので残る⭕️
+```
+
+```
+b = null;
+
+ALBA😢
+VANILLA😢
+
+c🐻 ─────→ 🛏️①
+
+🛏️② 🗑️
+```
+🛏️②は誰も使っていないので
+<br>
+ガベージコレクション対象✨🗑️
+
+### ⭐️ new Object() がベッドを作る
+
+⭐️ 代入 (=)
+<br>
+→ 同じベッドを使うだけ
+（ベッドは増えない）
+
+⭐️ null
+→ ベッドを手放す
+
+⭐️ 誰も使っていないベッド
+→ ガベージコレクション🗑️
 
 # var 📖👀
 - ローカル変数のみOK ⭕️
