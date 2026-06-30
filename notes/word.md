@@ -103,15 +103,15 @@
 # 型
 - instanceof
   <br>
-  型チェック
+  中身の型チェック
   <br>
-  「お前は○○型か？」
+  「お前（左側）は右側の型か？俺は右」
 
 - instanceof String s
-
-  型チェック＋変数作成
   <br>
-  Stringなら s が使える
+   型チェック＋変数作成
+  <br>
+  true（String）なら s が使える
 
  - cast
   <br>
