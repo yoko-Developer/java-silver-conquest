@@ -24,6 +24,15 @@
 3. 引数同じ？
 4. abstractなら未実装OK
 
+# throw / throws
+
+- throw
+  <br>
+→ 今、例外を投げる💥
+- throws
+  <br>
+→ 投げるかも宣言📢
+
 # 例外
 1. throw 見る
 2. catch 上から探す（ヒットしたらcatch終わり）
@@ -85,6 +94,29 @@ Stringのコンスタントプールを使う
 # equals / ==
 - == ：アドレス
 - .equals() ：値
+
+# 初期化子（初期化ブロック）
+初期化子 → コンストラクタ
+
+### ⭐️ static初期化子
+
+static{}
+```
+static {
+    // クラスが最初に読み込まれたときに1回実行
+}
+```
+
+### ⭐️ インスタンス初期化子
+```
+{
+    // newするたびに実行
+}
+```
+
+⭐️初期化子 → コンストラクタ
+<br>
+の順番で動く
 
 # 配列 （定義方法）
 ## 宣言
@@ -447,8 +479,6 @@ null.フィールド ❌
     実行時例外💥
 
     ConcurrentModificationException
-
-    
 <br>
     ⭐️ 短い 例外にならない場合あり
 
@@ -490,10 +520,42 @@ in a = 10;
 - `boolean`には`void`なし
 - `throw`終了なら`return`なくてOK
 
+⭐️voidは引数に使えない
+
 # メソッド呼び出し
-- static → `クラス名.メソッド名`
+- static → `クラス名.メソッド名()`
+- インスタンス → `変数名.メソッド名()`
 - default → `インターフェース名.super.メソッド名()`
-- static → this使えない ❌
+- static → `this`使えない ❌
+
+### 呼び出しルール
+⭐️フィールド → ()なし
+<br>
+⭐️ メソッド → ()あり
+
+```
+Sample sample = new Sample();
+
+sample.hello();   // インスタンスメソッド
+Sample.print();   // staticメソッド
+```
+⭐️引数の数・型は宣言と一致 ⚠️
+<br>
+→ 違うとコンパイルエラー💥
+
+### ⭐️ メソッド宣言
+
+戻り値の型は必須 ⚠️
+
+void / int / String ...
+
+```
+void sample() { } ⭕️
+int sample() { } ⭕️
+String sample() { } ⭕️
+
+sample() { } ❌
+```
 
 # sealed + permits（継承できる子を制限）
 子は必須
@@ -759,10 +821,162 @@ String[]
 - 0x_52
 
 # instanceof
-→ 型チェック
+```
+obj instanceof クラス名
+ ↑                ↑
+ 変数          クラス名or
+             インターフェース名
+```
 
-instanceof String str（instanceOfが作った変数）<br>
-→ true側だけ str使える
+左側
+<br>
+→ オブジェクト（変数）
+
+右側
+<br>
+→ クラス名 または インターフェース名
+
+⭐️中に入っているオブジェクトの型チェック  
+  （❌ 変数の型ではない）
+
+```
+Object obj = "ABC";
+obj instanceof String
+
+⭐️ objの型：Object
+⭐️ 中身の型：String
+```
+
+## パターンマッチング
+
+if (obj instanceof String s)
+
+⭕️ trueなら s が使える
+<br>
+❌ elseでは使えない💥
+
+# record
+❌ extends不可（継承できない）💥
+
+⭕️ コンストラクタあり
+
+⭕️ getterは`フィールド名()`
+
+⭕️ toString・equals・hashCodeあり
+
+- フィールド
+```
+record Data(String value)
+
+// value はフィールド
+```
+
+- 値を取り出す
+```
+data.value()
+```
+
+## ⭐️ recordの getter名
+getValue() ❌
+<br>
+value() ⭕️
+
+# recordのコンストラクタ
+```
+record Data(String value)
+```
+
+⬇ 自動📦
+
+```
+public Data(String value) {
+    this.value = value; // 自動📦
+}
+```
+
+### OK🙆‍♀️
+
+```
+new Data("ABC")
+
+value = "ABC"
+
+📦 valueにABCが入ってる✨
+```
+
+```
+public Data() {
+    this("ABC");
+}
+
+📦valueにABCを入れて作って😊
+```
+### NG🙅‍♀️
+
+```
+new Data()
+
+value = ？？？
+
+📦 valueは空っぽNG💥
+```
+
+# ガベージコレクション🗑️
+⭐️ ゴミになるのは Object（ベッド）
+<br>
+人（変数）はゴミにならない ⚠️
+
+```
+Object a = new Object(); // 🐶ALBAのベッド🛏️①
+Object b = new Object(); // 🐶VANILLAのベッド🛏️②
+Object c = a;            // 🐻c不審者登場（ALBAと同じベッド）
+```
+
+```
+ALBA(a) ──┐
+            ├──→ 🛏️①
+c🐻 ────┘
+
+VANILLA(b) ───→ 🛏️②
+```
+
+```
+a = null;
+ALBA😢 ベッドを手放す
+
+c🐻 ─────→ 🛏️①
+
+VANILLA ─→ 🛏️②
+
+🛏️①は c が使ってるので残る⭕️
+```
+
+```
+b = null;
+
+ALBA😢
+VANILLA😢
+
+c🐻 ─────→ 🛏️①
+
+🛏️② 🗑️
+```
+🛏️②は誰も使っていないので
+<br>
+ガベージコレクション対象✨🗑️
+
+### ⭐️ new Object() がベッドを作る
+
+⭐️ 代入 (=)
+<br>
+→ 同じベッドを使うだけ
+（ベッドは増えない）
+
+⭐️ null
+→ ベッドを手放す
+
+⭐️ 誰も使っていないベッド
+→ ガベージコレクション🗑️
 
 # var 📖👀
 - ローカル変数のみOK ⭕️
@@ -771,9 +985,136 @@ instanceof String str（instanceOfが作った変数）<br>
 - 型変更NG ❌
 - null単体NG ❌
 
+# コンストラクタとメソッドの見分け方
+## ⭐️ コンストラクタ
+
+### 役割
+- newしたときに最初に呼ばれる
+- 📦 フィールドに必要な値を入れる仕事
+
+```
+public Data() {
+}
+```
+✅ クラス名（record名）と同じ名前
+
+✅ 戻り値がない（voidやStringがない）
+
+→ コンストラクタ📦
+
+## ⭐️ メソッド
+```
+public void test() {
+}
+public String test() {
+}
+```
+
+✅ 戻り値がある（voidも戻り値の一種）
+
+→ メソッド⚙️
+
+# コンストラクタとインスタンス🐶
+
+```
+new Dog()
+      ↓
+🐶「ALBAをお迎えします♪」
+（コンストラクタ）
+       ↓
+🐶 ALBAが家に来た✨
+（インスタンス）
+```
+### コンストラクタ
+
+    ＝お迎え手続き
+    ＝newすると最初に1回だけ
+
+### インスタンス
+
+    ＝できあがったALBA本人
+    ＝実際に使うもの
+
+```
+クッキー工場🍪
+
+① new：コンストラクタを呼ぶ
+🍳「注文入りました！」
+
+↓
+
+② コンストラクタ
+🍳「焼きます！」
+
+↓
+
+③ インスタンス完成
+🍪「できました！」
+
+↓
+
+④ item
+🍪を持つ人
+```
+
+## 呼ばれる順番 📖👀
+### コンストラクタ
+
+- new Sample()
+  <br>
+同じ名札と呼び方（引数）のコンストラクタ Sample() が呼ばれる
+
+- ⭐️ newすると
+1. フィールド（あれば）
+   <br>
+      ↓
+2. { }（名札なし）
+   <br>
+      ↓
+3. Sample()（名札あり）← コンストラクタ
+
+    ⭐️名札なしの {} が先！
+
+- ⭐️ newある？👀
+
+    newない
+    <br>
+    ↓
+    <br>
+    { }動かない
+    コンストラクタ動かない
+    <br>
+    ↓
+    <br>
+    初期値のまま  
 # this
-- 同じ名前 x なら → ローカル変数優先
-- this.x → フィールド
+### 同じ名前が2つある👀
+```
+this.name = name;
+     ↑       ↑
+フィールド   引数
+```
+- 左
+  
+  this.name
+<br>
+→ フィールド📦
+- 右
+<br>
+→ 引数🎁
+
+⭐️引数をフィールドに入れる 🎁 → 📦
+
+### this.
+- this.x
+  <br>
+    → 自分のフィールド・メソッド
+
+### this() 📖👀
+⭐️コンストラクタ
+- this(...)
+<br>
+    → 引数が一致するコンストラクタ
 
 # オーバーライド
 
@@ -799,9 +1140,13 @@ instanceof String str（instanceOfが作った変数）<br>
 → 右(new側)
 （オーバーライド）
 
-## コンストラクタ呼び出し
+## コンストラクタ呼び出し 📖👀
 - super()：親のコンストラクタ
 - this()：自分のクラスの別ブロックのコンストラクタ
+
+💥 どちらもコンストラクタの1行目だけ
+
+this.はどこでも書ける対象外
 
 # catch順
 子 → 親
