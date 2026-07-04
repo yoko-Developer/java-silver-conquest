@@ -95,6 +95,29 @@ Stringのコンスタントプールを使う
 - == ：アドレス
 - .equals() ：値
 
+# 初期化子（初期化ブロック）
+初期化子 → コンストラクタ
+
+### ⭐️ static初期化子
+
+static{}
+```
+static {
+    // クラスが最初に読み込まれたときに1回実行
+}
+```
+
+### ⭐️ インスタンス初期化子
+```
+{
+    // newするたびに実行
+}
+```
+
+⭐️初期化子 → コンストラクタ
+<br>
+の順番で動く
+
 # 配列 （定義方法）
 ## 宣言
 
@@ -456,8 +479,6 @@ null.フィールド ❌
     実行時例外💥
 
     ConcurrentModificationException
-
-    
 <br>
     ⭐️ 短い 例外にならない場合あり
 
@@ -839,9 +860,66 @@ if (obj instanceof String s)
 
 ⭕️ コンストラクタあり
 
-⭕️ getterはフィールド名()
+⭕️ getterは`フィールド名()`
 
 ⭕️ toString・equals・hashCodeあり
+
+- フィールド
+```
+record Data(String value)
+
+// value はフィールド
+```
+
+- 値を取り出す
+```
+data.value()
+```
+
+## ⭐️ recordの getter名
+getValue() ❌
+<br>
+value() ⭕️
+
+# recordのコンストラクタ
+```
+record Data(String value)
+```
+
+⬇ 自動📦
+
+```
+public Data(String value) {
+    this.value = value; // 自動📦
+}
+```
+
+### OK🙆‍♀️
+
+```
+new Data("ABC")
+
+value = "ABC"
+
+📦 valueにABCが入ってる✨
+```
+
+```
+public Data() {
+    this("ABC");
+}
+
+📦valueにABCを入れて作って😊
+```
+### NG🙅‍♀️
+
+```
+new Data()
+
+value = ？？？
+
+📦 valueは空っぽNG💥
+```
 
 # ガベージコレクション🗑️
 ⭐️ ゴミになるのは Object（ベッド）
@@ -906,6 +984,35 @@ c🐻 ─────→ 🛏️①
 - 引数 ❌
 - 型変更NG ❌
 - null単体NG ❌
+
+# コンストラクタとメソッドの見分け方
+## ⭐️ コンストラクタ
+
+### 役割
+- newしたときに最初に呼ばれる
+- 📦 フィールドに必要な値を入れる仕事
+
+```
+public Data() {
+}
+```
+✅ クラス名（record名）と同じ名前
+
+✅ 戻り値がない（voidやStringがない）
+
+→ コンストラクタ📦
+
+## ⭐️ メソッド
+```
+public void test() {
+}
+public String test() {
+}
+```
+
+✅ 戻り値がある（voidも戻り値の一種）
+
+→ メソッド⚙️
 
 # コンストラクタとインスタンス🐶
 
@@ -980,7 +1087,7 @@ new Dog()
     ↓
     <br>
     初期値のまま  
-# this（引数とフィールドを区別する）
+# this
 ### 同じ名前が2つある👀
 ```
 this.name = name;
@@ -1004,9 +1111,10 @@ this.name = name;
     → 自分のフィールド・メソッド
 
 ### this() 📖👀
+⭐️コンストラクタ
 - this(...)
 <br>
-    → 同じクラスのコンストラクタ
+    → 引数が一致するコンストラクタ
 
 # オーバーライド
 

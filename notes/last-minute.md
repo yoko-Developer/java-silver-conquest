@@ -12,7 +12,7 @@
 
 ✅ 配列：array.length = 階数（行数）
 
-✅ instanceof：変数の型じゃなく中身チェック
+✅ instanceof：変数の型じゃなく中身チェック、📦 中の人は右側の型ですか？
 
 ✅ instanceof：中身 = 右側の型ならtrue
 
@@ -21,3 +21,11 @@
 ✅ for文：条件式だけカンマNG💥
 
 ✅ record：継承できない（extends❌）
+
+✅ record：新しいフィールドは追加できない ❌
+
+✅ record：引数なしコンストラクタを作るなら this("値")
+
+✅ 独立：一番外側のclass/record = public又は修飾子なし
+
+✅ コンパクトコンストラクタ：public Data { → this.❌
