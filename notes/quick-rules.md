@@ -74,7 +74,7 @@ a.test();
 ```
 ⭕️ Aにtest()ある？
 
-→ Bのtest()実行 ⭕️
+→ Bのtest()実行 ⭕️ （実行はnew側）
 
 ❌ ない
 
@@ -127,7 +127,7 @@ a.test();
 
 ## public abstract 👻
 
-Interface（型情報）は必ず`public`
+Interfaceのメソッドは必ず`public`
 
 public → 書いてもOK
 <br>
@@ -167,7 +167,7 @@ interface C extends A, B ⭕
 ```
 
 # interface
-default：予備
+default：予備（実装がない時）
 
 ⭐️ defaultある？
 
@@ -272,10 +272,12 @@ new 子()
 
 #  recordのデフォルトコンストラクタ
 record(String value)
-
+<br>
 ↓
-
+<br>
 value📦を元に value() が自動生成される👻 （見えない）
+
+📛同じ名札に注意💥
 
 # ⭐️overrideできない
 
@@ -309,6 +311,8 @@ static （両方） ❌
 
 # メソッド呼び出し 📖👀
 ### ⭐️名札を探せ📛
+📛 = メソッド名 + 引数
+
 👀 呼んでるメソッドを探す
 <br>
 ↓
@@ -352,19 +356,6 @@ static （両方） ❌
 <br>
 → 使った行💥
 
-# 瞬殺⭐️コンパクトコンストラクタ💥 👀📖
-```
-public Data {
-```
-コンパクトコンストラクタ👀
-<br>
-↓
-<br>
-❌ this.フィールド📦💥
-⭕ value🎁（引数）
-
-⭐️this. 👀即死💥
-
 # 即断⭐️コンストラクタ or メソッド
 
 ()がある
@@ -378,6 +369,42 @@ public Data {
 ⭕️YES → 📦コンストラクタ
 
 ❌NO → ⚙️メソッド
+
+# 即断⭐️インターフェース💥 👀📖
+## 👻メソッド
+**public** abstractが勝手につく
+
+## 👻 フィールド
+public static **final** が勝手に付く
+
+⭐️final = 定数🔐
+
+## 処理を書く → default必須💥
+❌ void sample() {}
+
+⭕ default void sample() {}
+
+## 抽象クラス
+未完成でOK⭕️
+<br>
+↓
+<br>
+子クラスに実装させる👦
+
+# 瞬殺⭐️recordのコンパクトコンストラクタ💥 👀📖
+```
+public Data { // 👈コンパクトコンストラクタ👀
+```
+コンパクトコンストラクタ👀
+<br>
+↓
+<br>
+❌ this.フィールド📦💥
+⭕ value🎁（引数）
+
+⭐️{}の中にsthis. 👀即死💥
+<br>
+⭐️セットで死亡
 
 # 瞬殺⭐️void
 - 戻り値（return）はなし

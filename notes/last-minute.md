@@ -28,4 +28,12 @@
 
 ✅ 独立：一番外側のclass/record = public又は修飾子なし
 
-✅ コンパクトコンストラクタ：public Data { → this.❌
+✅ コンパクトコンストラクタ：`public Data {` → this.❌
+
+✅ 継承：子が使うフィールドがない → 親を見ろ👀
+
+✅ 継承：コンストラクタは引き継がない❌
+
+✅ interface：処理あり → default必須💥
+
+✅ interface：public abstract と public static final のお化け👻
