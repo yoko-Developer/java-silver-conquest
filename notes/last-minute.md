@@ -34,6 +34,20 @@
 
 ✅ 継承：コンストラクタは引き継がない❌
 
-✅ interface：処理あり → default必須💥
+✅ interface：セルフ処理あり → default必須💥
 
-✅ interface：public abstract と public static final のお化け👻
+✅ interface：セルフ処理なし → 子が実装💥
+
+✅ interface：public abstract と public static final はお化け👻
+
+✅ interface：default は直接 implements している interfaceだけ
+
+✅ interfaceのdefaultが2人🐶🐶：implementクラスでoverrideして選ぶ
+
+✅ interface / abstruct → newできない💥
+
+✅ override：同じ名札📛（メソッド名＋引数）の{}の中身を上書きすること
+
+✅ override：親 <= 子 / 戻り値は逆 親 >= 子
+
+✅シグニチャ：メソッド名 + 引数の型の数と順番

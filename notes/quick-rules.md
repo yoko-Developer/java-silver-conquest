@@ -167,25 +167,39 @@ interface C extends A, B ⭕
 ```
 
 # interface
-default：予備（実装がない時）
+## 役割
+🟦 interface → ルールを決める・defaultでセルフ処理😊（new❌）
+
+🟨 abstract class → 😴サボり先輩（未完成OK・完成してもOK・new❌）
+
+🟩 class implements → 💪下っ端後輩（完成必須・new⭕）
+
+
+| 教科書    | ようちゃん語           |
+| :------: | :----------------: |
+| 抽象メソッド | 🛏️ベッドだけ（`;`）    |
+| 具象メソッド | 🐶ALBA入り（`{}`あり） |
+| 抽象クラス  | 😴 サボり先輩（未完成OK）|
+| 具象クラス  | 💪 下っ端後輩（完成必須） |
+
+## default：予備（実装がない時）
 
 ⭐️ defaultある？
 
-⭕️ ある！
+⭕️ defaultあり！
 
 `default void test() {}`
-<br>
-↓
-<br>
-実装しなくてもOK
-- 実装がなければ default が実行される
-- 実装があれば default は使われない
 
-❌ ない！
+interfaceがセルフ実装😊
+<br>
+子が何もしない → interfaceがやる
+<br>
+子が実装する → 子がやる
+
+❌ defaultなし！
+
 `void test();`
-<br>
-↓
-<br>
+
 子（実装クラス）が実装必須
 <br>
 なければコンパイルエラー💥
@@ -210,9 +224,9 @@ class C implements A, B
 
 同じdefaultが2個👻👻
 
-override必須
+implementしたクラスがoverride必須
 
-しないと
+しないと、どっちの名札📛？？💢
 <br>
 コンパイルエラー💥
 
@@ -270,6 +284,85 @@ new 子()
 
 - インターフェース（implements） → 実装クラスは`public` のみ ⭕️
 
+# 配列と継承
+```
+A[] array = {}
+// A型専用マンションはA型のみ入居可⭕️
+```
+⭕ A
+<br>
+⭕ Aの子
+<br>
+❌ 関係ないクラス
+<br>
+❌ interfaceはnewできない
+
+# キャスト
+```
+💥
+class Alba { }
+
+class Vanilla extends Alba { }
+
+public class Main {
+    public static void main(String[] args) {
+
+        Alba a = new Alba();      // 🏠 中身はALBA
+        Vanilla b = (Vanilla) a;  // 💥 実行時エラー
+
+    }
+}
+```
+🏠ハウスの中を見ろ👀
+
+🏠
+<br>
+🐶 ALBA😴
+<br>
+😡「ALBAじゃん！！」
+
+💥 ClassCastException
+
+```
+⭕️
+Alba a = new Vanilla();
+Vanilla b = (Vanilla) a;
+```
+🏠
+<br>
+🐶 VANILLA😴
+
+🏠のラベルを変えても
+<br>
+🐶中身は変わらない💥
+
+## 🐶 子 → 親 ⭕️
+```
+Alba a = new Vanilla();
+Alba b = (Alba) a;
+```
+🏠の中は
+<br>
+🐶 VANILLA😴
+
+⭕️😊
+
+VANILLAはALBAの子供だから
+<br>
+VANILLAをALBAとして扱うのはOK⭕️
+
+⭐️キャストなしでOK
+
+## 🐶 親 → 子
+```
+Vanilla b = (Vanilla) a;
+```
+⚠️ キャストは必要
+
+🏠の中が
+- 🐶VANILLA → ⭕
+- 🐶ALBA → 💥ClassCastException
+
 #  recordのデフォルトコンストラクタ
 record(String value)
 <br>
@@ -311,7 +404,7 @@ static （両方） ❌
 
 # メソッド呼び出し 📖👀
 ### ⭐️名札を探せ📛
-📛 = メソッド名 + 引数
+📛 = メソッド名 + 引数（型・数）のセット
 
 👀 呼んでるメソッドを探す
 <br>
@@ -345,16 +438,6 @@ static （両方） ❌
 → recordより厳しいアクセス修飾子は使えない ❌ 
 <br>
 （public または無印）
-
-# 瞬殺⭐️コンパイルエラー 📖👀
-
-- 宣言が間違い
-<br>
-→ その行💥
-
-- 呼び出し・使用が間違い
-<br>
-→ 使った行💥
 
 # 即断⭐️コンストラクタ or メソッド
 
@@ -390,6 +473,81 @@ public static **final** が勝手に付く
 ↓
 <br>
 子クラスに実装させる👦
+
+# 瞬殺⭐️コンパイルエラー 📖👀
+
+- 宣言が間違い
+<br>
+→ その行💥
+
+- 呼び出し・使用が間違い
+<br>
+→ 使った行💥
+
+# 瞬殺⭐️ぬるぽを探せ
+配列の参照型
+
+```
+Item[] items = new Item[3] 👀 見つけた
+``` 
+
+↓
+
+```
+items
+ ┌───┬───┬───┐
+ │ null │ null │ null │
+ └───┴───┴───┘
+ ```
+    Itemは1つも作られてない💥
+
+```
+null, null, null // 中身全部null
+```
+
+⭐️ ぬるぽ探せ‼️ 👀
+
+# 瞬殺 ⭐️ returnを探せ（equals） 📖👀
+` **equals** 問題
+
+1. return を探す
+2. 何を比較しているか見る
+3. 比較していない項目は無視
+
+例
+
+✨ **return s.num == this.num;**
+
+    → numだけ比較
+    → nameは無視
+
+✨ **A.equals(B)**
+
+    this = A
+    obj = B
+
+# 瞬殺 ⭐️ ArrayList
+add
+<br>
+→ 増える
+
+set
+<br>
+→ 置換
+```
+equals問題だ 👀
+↓
+this = 左
+obj = 右
+↓
+比較してるのは num
+↓
+10 == 10
+```
+
+⭐️ Objectは古い神様ルール
+
+equalsでもアドレス比較（==）になる
 
 # 瞬殺⭐️recordのコンパクトコンストラクタ💥 👀📖
 ```
@@ -493,64 +651,6 @@ public Data { // 👈コンパクトコンストラクタ👀
 
 ⭐️親のメソッド使う
 ```
-# 瞬殺⭐️ぬるぽを探せ
-配列の参照型
-
-```
-Item[] items = new Item[3] 👀 見つけた
-``` 
-
-↓
-
-Itemは3個作られてない
-
-```
-null, null, null` 中身null
-```
-
-⭐️ ぬるぽ探せ‼️ 👀
-
-# 瞬殺 ⭐️ returnを探せ（equals） 📖👀
-` **equals** 問題
-
-1. return を探す
-2. 何を比較しているか見る
-3. 比較していない項目は無視
-
-例
-
-✨ **return s.num == this.num;**
-
-    → numだけ比較
-    → nameは無視
-
-✨ **A.equals(B)**
-
-    this = A
-    obj = B
-
-# 瞬殺 ⭐️ ArrayList
-add
-<br>
-→ 増える
-
-set
-<br>
-→ 置換
-```
-equals問題だ 👀
-↓
-this = 左
-obj = 右
-↓
-比較してるのは num
-↓
-10 == 10
-```
-
-⭐️ Objectは古い神様ルール
-
-equalsでもアドレス比較（==）になる
 
 # try-with-resources
 ⭐️ `try()` closeは逆
