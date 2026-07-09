@@ -34,9 +34,21 @@
 
 🌳 継承：📦フィールドは上書きしない（親子で別々）
 
-💳 interface：セルフ処理あり → default必須💥
+🌳 extends：親は1人🐶
+
+💳 implements：カードは何枚でもOK🐶🐶🐶
+
+💳 interface：セルフ処理{}あり → default / private / static必須💥
 
 💳 interface：セルフ処理なし → 子が実装💥
+
+💳 default：子も使える😊
+
+💳 private🔐：interfaceだけ😐
+
+💳 static📌：インターフェース名.📛()で呼ぶ😗
+
+💳 interface：privateとdefault💥 → 一緒に書けない💢
 
 💳 interface：public abstract と public static final はお化け👻
 
@@ -56,7 +68,11 @@
 
 📦 フィールド：同じ名前でも上書きしない（親子で別々）
 
-🏗️ コンストラクタ：子をnew → 親→子の順
+🏗️ コンストラクタ：子をnew → this → super をたどれ👀 👉 表示は親→子😊
+
+🏗️ this(...)：同じクラスの🏗️引数が同じ📛のを探せ👀
+
+🏗️ super(...)：親クラスの🏗️ 引数が同じ📛のを探せ👀
 
 ⭐️ シグニチャ：メソッド名 + 引数の型の数と順番
 
@@ -66,7 +82,5 @@
 
 👈 this. = 自分の📦（スコープ内の同じ名前を区別）
 
-🏗️ this(...)：同じクラスの🏗️引数が同じ📛のを探せ👀
-
-🏗️ super(...)：親クラスの🏗️ 引数が同じ📛のを探せ👀
+🦭 sealedの子：final / sealed / non-sealed の3択😊
 

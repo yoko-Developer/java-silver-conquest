@@ -227,6 +227,18 @@ implementしたクラスがoverride必須
 <br>
 コンパイルエラー💥
 
+# 💳 interfaceメソッド
+
+### 処理なし
+戻り値 メソッド();
+
+### 処理あり（セルフ処理は3人⭕️）
+- default 戻り値 メソッド() {}
+- private 戻り値 メソッド() {}
+- static 戻り値 メソッド() {}
+
+💥 private default 両方はダメ
+
 # continue （到達不能）
 
 ⭕️ continue;
@@ -257,6 +269,13 @@ implementしたクラスがoverride必須
 - メソッド名とクラス名は同じ
 - 戻り値を書かない ❌
 - newすると最初に1回だけ呼ばれる
+
+| 修飾子       | 誰が使える？         |
+| --------- | -------------- |
+| `default` | implementsした子  |
+| `private` | interfaceの中だけ  |
+| `static`  | interface名から呼ぶ |
+
 
 # コンストラクタ（コンストラクタorメソッド） 📖👀
 ### voidを探せ 🔑
