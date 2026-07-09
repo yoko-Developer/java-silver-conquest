@@ -1,53 +1,72 @@
-✅ switch文のフォールスルー：ヒットしたら終わりじゃない → breakまで
+🔀 switch文のフォールスルー：ヒットしたら終わりじゃない → breakまで
 
-✅ default：どこに書いてもいい
+🔀 default：どこに書いてもいい
 
-✅ switch式：フォールスルーしない
+🔀 switch式：フォールスルーしない
 
-✅ yield：switch式で値を返す
+🔀 yield：switch式で値を返す
 
-✅ {} がない:次の1文だけが対象
+🔁 {} がない:次の1文だけが対象
 
-✅ 二次元配列：array[i][j] = i階j部屋
+🔁 for文：条件式だけカンマNG💥
 
-✅ 配列：array.length = 階数（行数）
+🏢 二次元配列：array[i][j] = i階j部屋
 
-✅ instanceof：変数の型じゃなく中身チェック、📦 中の人は右側の型ですか？
+🏢 配列：array.length = 階数（行数）
 
-✅ instanceof：中身 = 右側の型ならtrue
+🔍 instanceof：変数の型じゃなく中身チェック、📦 中の人は右側の型ですか？
 
-✅ instanceof変数：true側だけ使える（else❌）
+🔍 instanceof：中身 = 右側の型ならtrue
 
-✅ for文：条件式だけカンマNG💥
+🔍 instanceof変数：true側だけ使える（else❌）
 
-✅ record：継承できない（extends❌）
+💿 record：継承できない（extends❌）
 
-✅ record：新しいフィールドは追加できない ❌
+💿 record：新しいフィールドは追加できない ❌
 
-✅ record：引数なしコンストラクタを作るなら this("値")
+💿 record：引数なしコンストラクタを作るなら this("値")
 
-✅ 独立：一番外側のclass/record = public又は修飾子なし
+🌳 継承：子が使うフィールド📦がない → 親を見ろ👀
 
-✅ コンパクトコンストラクタ：`public Data {` → this.❌
+🌳 継承：子が使う📛がない → 親を見ろ👀
 
-✅ 継承：子が使うフィールドがない → 親を見ろ👀
+🌳 継承：コンストラクタは引き継がない❌
 
-✅ 継承：コンストラクタは引き継がない❌
+🌳 継承：📦フィールドは上書きしない（親子で別々）
 
-✅ interface：セルフ処理あり → default必須💥
+💳 interface：セルフ処理あり → default必須💥
 
-✅ interface：セルフ処理なし → 子が実装💥
+💳 interface：セルフ処理なし → 子が実装💥
 
-✅ interface：public abstract と public static final はお化け👻
+💳 interface：public abstract と public static final はお化け👻
 
-✅ interface：default は直接 implements している interfaceだけ
+💳 インターフェース名.super.メソッド名();：🐶直接のママ犬⭕️、おばあちゃん犬❌
 
-✅ interfaceのdefaultが2人🐶🐶：implementクラスでoverrideして選ぶ
+💳 interfaceのdefaultが2人🐶🐶：implementクラスでoverrideして選ぶ
 
-✅ interface / abstruct → newできない💥
+💳 interface / abstract→ newできない💥
 
-✅ override：同じ名札📛（メソッド名＋引数）の{}の中身を上書きすること
+📛 override：同じ名札📛（メソッド名＋引数）の{}の中身を上書きすること
 
-✅ override：親 <= 子 / 戻り値は逆 親 >= 子
+📛 俺のメソッド📛：2段階👀
 
-✅シグニチャ：メソッド名 + 引数の型の数と順番
+📛 override：親 <= 子 / 戻り値は逆 親 >= 子
+
+📛 メソッド：上書き（override）😊
+
+📦 フィールド：同じ名前でも上書きしない（親子で別々）
+
+🏗️ コンストラクタ：子をnew → 親→子の順
+
+⭐️ シグニチャ：メソッド名 + 引数の型の数と順番
+
+⭐️ 独立：一番外側のclass/record = public又は修飾子なし
+
+⭐️ コンパクトコンストラクタ：`public Data {` → this.❌
+
+👈 this. = 自分の📦（スコープ内の同じ名前を区別）
+
+🏗️ this(...)：同じクラスの🏗️引数が同じ📛のを探せ👀
+
+🏗️ super(...)：親クラスの🏗️ 引数が同じ📛のを探せ👀
+
