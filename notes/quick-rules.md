@@ -669,9 +669,11 @@ public Data { // 👈コンパクトコンストラクタ👀
 ```
 
 # try-with-resources
-⭐️ `try()` closeは逆
+⭐️ `try()` 
 
-close → catch → finally
+💥 複数resource：closeは逆順🙃
+
+💥 例外：close → catch → finally
 
 # catch 
 小さい → 大きい ⭕

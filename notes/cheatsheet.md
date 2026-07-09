@@ -45,9 +45,44 @@
 
 ## try-with-resources
     try() ⭐️目印：これあれば👀
-1. close（） 最初
-2. catch
-3. finally（） 最後
+1. try
+<br>
+↓
+2. close() ⭐️ → この中だけ逆順にclose
+<br>
+↓
+<br>
+3. catch
+ <br>
+↓
+4. finally
+
+```
+try (
+    A a = new A(); //⭐️tryの中が2つ👀
+    B b = new B(); //⭐️tryの中が2つ👀
+) {
+    throw new Exception();
+} catch (Exception e) {
+    System.out.println("catch");
+} finally {
+    System.out.println("finally");
+}
+```
+
+リソースが2つあれば
+```
+A を開く
+B を開く
+```
+closeは
+<br>
+✨逆順になる🙃
+```
+B close
+A close
+```
+
 
 ⭕️ try + catch + finally （全部入り）
 

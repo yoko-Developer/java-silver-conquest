@@ -84,3 +84,16 @@
 
 🦭 sealedの子：final / sealed / non-sealed の3択😊
 
+💥 RuntimeException：throws不要😊
+
+💥 IOException・SQLException：throws必要😊
+
+💥 argsなし：null❌ → 長さ0の配列{}
+
+💥 finally：最後に必ず実行
+
+💥 catch：親を先に書くと子は到達不能💥
+
+💥 try()：close逆順🙃
+
+💥 try()：例外→close→catch→finally
