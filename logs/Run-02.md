@@ -233,7 +233,21 @@
 第6章
 
 1. ❌ try-catch配列の例外
-2. ❌ try-csatch-finalのaregs.length
+2. ❌ try-catch-finalのargs.length
 3. ○⤴️ 例外の到達不能
-4. ❌ try-catch-fainallyの記述順
-5. 
+4. ❌ try-catch-finallyの記述順
+
+20260712
+
+5. ❌ 例外の実行順、returnのルール
+6. ❌ 例外finallyにreturnあり
+7. ❌ 例外finallyにreturnなし
+8. ❌ tryの相棒は？
+9. ○⤴️ ネスト例外の出力ルール
+10. ❌ 独自例外のママは誰？ 👀📝
+11. ❌ throwsを書かなくてもいいのは誰？ 👀📝
+12. ○⤴️ エラー（Error親分）の説明
+13. ○⤴️ args[0].length()の時のインデックス0は？
+14. ❌ Listの範囲外
+15. ❌ null.equals
+16. ❌ キャスト+equals

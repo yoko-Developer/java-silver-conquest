@@ -77,9 +77,8 @@ Aにtest()📛ある？👀
     ⭕ある
     → Bのtest()実行 ⭕️ （実行はnew側）
 
-# this （同じ名前）
-
-同じ名前のフィールドへアクセス
+# this. （同じ名前）
+⭐️ 同じ名前のフィールドへアクセス
 
 `public void setValue(String value)`
 
@@ -88,6 +87,31 @@ Aにtest()📛ある？👀
 ❌ value = value;
 （引数 ← 引数）
 
+# this()
+⭐️ 別コンストラクタ
+
+⭐️ this( 見つけた👀
+<br>
+↓
+<br>
+コンストラクタ呼び出し
+<br>
+↓
+<br>
+同じクラスの別コンストラクタ
+
+💥 1行目以外に書けない 💥
+
+# super()
+super( 見つけた👀
+<br>
+↓
+<br>
+親コンストラクタ
+<br>
+↓
+<br>
+💥 1行目以外に書けない 💥
 # override
 
 同じ名前
@@ -388,6 +412,28 @@ value📦を元に value() が自動生成される👻 （見えない）
 
 📛同じ名札に注意💥
 
+# equals + キャスト
+
+⭐ equalsを見たら中を見る👀
+
+a.equals(b)
+<br>
+↓
+<br>
+equalsの中に (型)obj がある？
+<br>
+↓
+<br>
+🎭 cast発見👀
+<br>
+↓
+<br>
+🏠 中身を見る👀
+<br>
+↓
+<br>
+違う犬🐶なら ClassCastException💥
+
 # ⭐️overrideできない
 
 private （親） ❌
@@ -490,8 +536,61 @@ public static **final** が勝手に付く
 <br>
 子クラスに実装させる👦
 
-# 瞬殺⭐️コンパイルエラー 📖👀
+# 即断⭐️例外🚨
+## 🔚 finally
+### 🔚 finallyにreturnあり⭕️
+📮 return（予約）
+<br>
+↓
+<br>
+前のreturn・throwは採用されない🙅‍♀️
+<br>
+↓
+<br>
+🔚 finallyのreturnが勝つ🏆
+<br>
+↓
+<br>
+ブロック外のreturnは出番なし❌（あれば）
 
+### 🔚 finallyにreturnなし❌
+📮 return（予約）
+<br>
+↓
+<br>
+finally（独り言🗣️）
+<br>
+↓
+<br>
+📮 予約したreturnが勝つ🏆
+
+## 💥ネスト例外発生🔥
+↓
+<br>
+一番近い（深い）catch🧯
+<br>
+↓
+<br>
+消火成功😊
+<br>
+↓
+<br>
+外へ飛ばない❌
+<br>
+# 瞬殺⭐️tryの相棒🚨
+❌ tryだけ💥
+<br>
+❌ finally複数💥
+
+✅ try + catch
+<br>
+✅ try + finally
+<br>
+✅ try + catch + finally
+<br>
+✅ catch複数⭕️
+
+# 瞬殺⭐️コンパイルエラー 📖👀
 - 宣言が間違い
 <br>
 → その行💥

@@ -48,6 +48,8 @@
 
 💳 static📌：インターフェース名.📛()で呼ぶ😗
 
+💳 interface：{}あり → default / private / staticだけ⭕️
+
 💳 interface：privateとdefault💥 → 一緒に書けない💢
 
 💳 interface：public abstract と public static final はお化け👻
@@ -88,7 +90,7 @@
 
 💥 IOException・SQLException：throws必要😊
 
-💥 argsなし：null❌ → 長さ0の配列{}
+💥 args（コマンドライン引数）なし：args == null ❌、args.length == 0 ⭕（長さ0の配列）ArrayIndexOutOfBoundsException💥
 
 💥 finally：最後に必ず実行
 
@@ -97,3 +99,40 @@
 💥 try()：close逆順🙃
 
 💥 try()：例外→close→catch→finally
+
+💥 return・throw → 後ろは到達不能💥
+
+📋 List宣言：List<String> list = new ArrayList<>();
+
+📋 はみ出しList：範囲外→IndexOutOfBoundsException
+
+📦 はみ出し配列：範囲外 → ArrayIndexOutOfBoundsException
+
+🔤 はみ出しString → StringIndexOutOfBoundsException
+
+📮 return（予約）：finally → returnで終了 🏆 （🚨ブロック外のreturn❌）
+
+📮 return（予約）：finallyにreturnあり 🏆 → 前のreturn上書き💥
+
+📮 return（予約）：finallyにreturnなし（独り言） → 予約return
+が勝つ 🏆
+
+🚨 tryの相棒：catch又はfinallyどっちか必須、finally複数❌💥
+
+🚒 例外ネスト：内側で消火されたエラー🔥は外には広がらない
+
+🚨 独自例外：オリジナル例外のみんなのママはException🐶
+
+🚨 throws：RuntimeExceptionファミリー🐶🐶 → 書かなくていい😊
+
+💥 Error：JVM重大トラブル💣（catchはできる⭕、throws不要😊）
+
+🚨 はみ出しList📋：範囲外→IndexOutOfBoundsException
+
+🚨 はみ出し配列📦：範囲外 → ArrayIndexOutOfBoundsException
+
+🚨 はみ出しString🔤 → StringIndexOutOfBoundsException
+
+🚨 null.equals：左がnullなら瞬殺⭐️ぬるぽ💥
+
+🎭 cast：equalsの(A)obj → 中身✅違う犬❌ → ClassCastException💥
