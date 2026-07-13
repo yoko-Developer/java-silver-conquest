@@ -77,9 +77,8 @@ Aにtest()📛ある？👀
     ⭕ある
     → Bのtest()実行 ⭕️ （実行はnew側）
 
-# this （同じ名前）
-
-同じ名前のフィールドへアクセス
+# this. （同じ名前）
+⭐️ 同じ名前のフィールドへアクセス
 
 `public void setValue(String value)`
 
@@ -88,6 +87,31 @@ Aにtest()📛ある？👀
 ❌ value = value;
 （引数 ← 引数）
 
+# this()
+⭐️ 別コンストラクタ
+
+⭐️ this( 見つけた👀
+<br>
+↓
+<br>
+コンストラクタ呼び出し
+<br>
+↓
+<br>
+同じクラスの別コンストラクタ
+
+💥 1行目以外に書けない 💥
+
+# super()
+super( 見つけた👀
+<br>
+↓
+<br>
+親コンストラクタ
+<br>
+↓
+<br>
+💥 1行目以外に書けない 💥
 # override
 
 同じ名前
@@ -388,8 +412,29 @@ value📦を元に value() が自動生成される👻 （見えない）
 
 📛同じ名札に注意💥
 
-# ⭐️overrideできない
+# equals + キャスト
 
+⭐ equalsを見たら中を見る👀
+
+a.equals(b)
+<br>
+↓
+<br>
+equalsの中に (型)obj がある？
+<br>
+↓
+<br>
+🎭 cast発見👀
+<br>
+↓
+<br>
+🏠 中身を見る👀
+<br>
+↓
+<br>
+違う犬🐶なら ClassCastException💥
+
+# ⭐️overrideできない
 private （親） ❌
 <br>
 → 継承されない  （子クラスから直接見れない） ❌
@@ -490,8 +535,157 @@ public static **final** が勝手に付く
 <br>
 子クラスに実装させる👦
 
-# 瞬殺⭐️コンパイルエラー 📖👀
+# 即断 ⭐️ 例外🚨（🔚 finally × ↩️ return 出力パターン表）
 
+## finallyを探せ👀
+finallyを見る👀🔚
+<br>
+↓
+<br>
+returnある？↩️
+<br>
+↓
+<br>
+ある → finally勝ち🥇🔚
+<br>
+ない → 予約return勝ち🥇📮
+
+### 👀確認する場所
+① 📮 catchのreturn（予約）
+<br>
+② 🔚↩️ finallyのreturn（🔚上書き）
+<br>
+③ {}ブロック外 return
+
+### 📮 予約returnなし❌
+ブロック外return実行🥇
+
+## ① 📮catchのreturn⭕️ + 🔚 finally⭕️ + 🔚↩️ finallyのreturn⭕️ + {}ブロック外⭕️
+
+📮 return予約あり⭕️
+<br>
+↓
+<br>
+① 🔚 finally実行🥇
+<br>
+↓
+<br>
+② 🔚↩️ finallyのreturn実行🥈
+<br>
+❌ 予約returnは上書き
+❌ ブロック外returnは出番なし
+
+⭐️出力順：① 🔚 finally → ② 🔚↩️ finallyのreturn
+
+## ② 📮 catchのreturn⭕️ + 🔚 finally⭕️ + 🔚↩️ finallyのreturn❌ + ブロック外⭕️
+📮 return（予約）
+<br>
+↓
+🔚 finally実行（独り言🗣️）
+<br>
+↓
+<br>
+① 📮 予約return🥇
+<br>
+※finallyとブロック外returnは出番なし❌
+
+⭐️出力順：① 📮 catchのreturn⭕️だけ
+
+## ③ 📮 catchのreturn⭕️ + 🔚 finally❌ + 🔚↩️ finallyのreturn⭕️ + {}ブロック外❌
+📮 catchのreturn（予約）
+<br>
+↓
+<br>
+① 🔚↩️  finallyのreturn実行🥇
+<br>
+↓
+<br>
+② 📮 catchのreturn実行🥈
+
+⭐️出力順：① 🔚↩️ finally → ② 📮 予約return
+
+## ④ 📮 catchのreturn❌ + 🔚 finally⭕️ + 🔚↩️ finallyのreturn❌ + {}ブロック外⭕️
+📮 catchのreturnなし❌
+<br>
+↓
+<br>
+① 🔚 finally実行🥇
+<br>
+↓
+<br>
+② {}ブロック外return実行🥈
+<br>
+⭐️出力順：① 🔚 finally → ② {}ブロック外return
+
+## 📮 catchのreturn❌ + 🔚 finally❌ + {}ブロック外retun⭕️
+📮 returnなし❌
+<br>
+↓
+<br>
+① {}ブロック外return実行🥇
+
+⭐️出力順：① {}ブロック外return
+
+## 💥ネスト例外発生🔥
+↓
+<br>
+一番近い（深い）catch🧯
+<br>
+↓
+<br>
+消火成功😊
+<br>
+↓
+<br>
+catchは外へ飛ばない❌
+<br>
+⭐️finallyは実行⭕️
+# 瞬殺 ⭐️ tryの相棒🚨
+❌ tryだけ💥
+<br>
+❌ finally複数💥
+
+✅ try + catch
+<br>
+✅ try + finally
+<br>
+✅ try + catch + finally
+<br>
+✅ catch複数⭕️
+
+# 瞬殺 ⭐️ List宣言📋
+## 👀 newを見る
+### 右にこれあったら👀
+    `new ArrayList<>()`
+
+### 左はどっちでもOK⭕️
+型
+- ⭕ List
+- ⭕ ArrayList
+
+ジェネリクス
+- ⭕ あり
+- ⭕ なし
+
+### new List<>()💥
+❌ interfaceはnewできない
+
+## 👀 newがあれば左を見る
+
+⭕ List list = new ArrayList<>();
+<br>
+⭕ List<String> list = new ArrayList<>();
+
+⭕ ArrayList list = new ArrayList<>();
+<br>
+⭕ ArrayList<String> list = new ArrayList<>();
+
+### ❌ 逆はダメ💥
+❌ ArrayList list = new List<>();
+<br>
+❌ List list = new List<>();
+
+# 瞬殺 ⭐️ コンパイルエラー 📖👀
 - 宣言が間違い
 <br>
 → その行💥
@@ -500,7 +694,7 @@ public static **final** が勝手に付く
 <br>
 → 使った行💥
 
-# 瞬殺⭐️ぬるぽを探せ
+# 瞬殺 ⭐️ ぬるぽを探せ
 配列の参照型
 
 ```
@@ -542,6 +736,56 @@ null, null, null // 中身全部null
     this = A
     obj = B
 
+# 瞬殺 ⭐️ null.📛
+null.📛 👀
+<br>
+↓
+<br>
+ぬるぽ
+<br>
+💥 NullPointerException
+
+# 瞬殺 ⭐️ 無限再帰♾️
+```
+public static void main(String[] args) { 
+                              ↑
+                         🏠 今いる部屋
+    main(args);
+        ↑
+     呼んでる📛                           
+}
+```
+📍今いるメソッド（部屋）👀
+<br>
+`public static void main(String[] args)`
+<br>
+このmainが現在地📍
+<br>
+↓
+<br>
+自分の部屋の処理を見る👀
+<br>
+↓
+<br>
+👀 呼んでる📛を探す
+<br>
+↓
+<br>
+main(args)
+↓
+<br>
+main(String[])が見つかる
+<br>
+↓
+<br>
+自分だった💥
+<br>
+↓
+<br>
+無限再帰♾️
+<br>
+StackOverflowError
+
 # 瞬殺 ⭐️ ArrayList
 add
 <br>
@@ -576,23 +820,23 @@ public Data { // 👈コンパクトコンストラクタ👀
 ❌ this.フィールド📦💥
 ⭕ value🎁（引数）
 
-⭐️{}の中にsthis. 👀即死💥
+⭐️{}の中にthis. 👀即死💥
 <br>
 ⭐️セットで死亡
 
-# 瞬殺⭐️void
+# 瞬殺 ⭐️ void
 - 戻り値（return）はなし
   <br>
   →戻り値あればコンパイルエラー💥
 
-  # 瞬殺⭐️実行順 📖👀
+  # 瞬殺 ⭐️ 実行順 📖👀
   ### newを探せ
 - newある👀
-1. 名札なし { } 
+1. 📛名札なし { } 
    <br>
     ↓
    <br>
-2. 名札付き Sample()
+2. 📛名札付き Sample()
 - newない👀
     <br>
     ↓
@@ -604,12 +848,12 @@ public Data { // 👈コンパクトコンストラクタ👀
     <br>
     ⭐️ 初期値を見る👀
 
-# 瞬殺⭐️record💥 📖👀
+# 瞬殺 ⭐️ record💥 📖👀
 ❌ extends不可（継承できない）💥
 
 🔒 immutable（作ったら変更不可）
 
-# 瞬殺⭐️return💥 📖👀
+# 瞬殺 ⭐️ return💥 📖👀
 - メソッド終了
 - returnの後は書けない💥
   <br>
@@ -617,14 +861,31 @@ public Data { // 👈コンパクトコンストラクタ👀
   <br>
   → コンパイルエラー
 
-# 瞬殺⭐️throw💥
+# 瞬殺 ⭐️ throw💥
 - throwの後は書けない💥
   <br>
   → 到達不能コード
   <br>
   → コンパイルエラー
 
-# 瞬殺⭐️値渡し
+# 瞬殺 ⭐️ try()の中
+try() の中に書ける⭕️
+- 宣言 ⭕️
+  <br>
+  `A a = new A()`
+- 外で作った変数名だけ置く（new❌ 型❌） ⭕️
+  <br>
+  `c`
+
+書けない❌
+- 代入 ❌
+<br>
+  `b = new B()`
+- 後でnew（再代入）する変数 ❌
+<br>
+   `e = new E()`
+
+# 瞬殺 ⭐️ 値渡し
 
 ### 👀 引数の型を見る
 
@@ -648,14 +909,14 @@ public Data { // 👈コンパクトコンストラクタ👀
 <br>
 元が変わる
 
-# 瞬殺⭐️オーバーロード 📖👀
+# 瞬殺 ⭐️ オーバーロード 📖👀
 ⭐️複数のメソッドに同じように一致💥
 
 → どっちを呼ぶかわからない💢
 <br>
 → コンパイルエラー💥
 
-# 瞬殺⭐️オーバーライド
+# 瞬殺 ⭐️ オーバーライド
 ```
 ()ある？
 ↓
@@ -669,9 +930,11 @@ public Data { // 👈コンパクトコンストラクタ👀
 ```
 
 # try-with-resources
-⭐️ `try()` closeは逆
+⭐️ `try()` 
 
-close → catch → finally
+💥 複数resource：closeは逆順🙃
+
+💥 例外：close → catch → finally
 
 # catch 
 小さい → 大きい ⭕
