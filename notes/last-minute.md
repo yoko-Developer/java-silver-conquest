@@ -1,12 +1,30 @@
+🍴 javac（コンパイル＝作る）
+`javac -d 出力先 Sample.java`
+
+✅ javac → .javaを書く
+<br>
+✅ -d → classを作る時に使う
+
+java（実行）
+`java -cp 場所 Sample`
+
+✅ java → クラス名を書く（.classなし）
+<br>
+✅ -cp → classを探す時に使う
+
+☘️────────☘️
+
 🔀 switch文のフォールスルー：ヒットしたら終わりじゃない → breakまで
 
-🔀 default：どこに書いてもいい
+🔀 default：位置自由（最後じゃなくてもOK）
 
 🔀 switch式：フォールスルーしない
 
 🔀 yield：switch式で値を返す
 
-🔁 {} がない:次の1文だけが対象
+☘️────────☘️
+
+🔁 {} がない:次の1文だけが対象（if / for / while / do-while / 拡張for）
 
 🔁 for文：条件式だけカンマNG💥
 
@@ -17,6 +35,8 @@
 🏢 配列：array.length = 階数（行数）
 
 ☘️────────☘️
+
+🔍 instanceof：左は変数、右はクラス名 or インターフェース名
 
 🔍 instanceof：変数の型じゃなく中身チェック、📦 中の人は右側の型ですか？
 
@@ -31,6 +51,12 @@
 💿 record：新しいフィールドは追加できない ❌
 
 💿 record：引数なしコンストラクタを作るなら this("値")
+
+☘️────────☘️
+
+🔓 アクセス修飾子
+
+🌳継承・💳interface・💿recordのconstructor：親 < 子
 
 ☘️────────☘️
 
@@ -72,13 +98,25 @@
 
 ☘️────────☘️
 
+💳 インタフェース[implementsで渡す]（能力カード・指令書）：何枚でも⭕️
+    → new（実装）❌
+
+🧓 abstract[extendsで渡す]（サボり先輩）：１つだけ⚠️
+<br>
+    → new ❌
+
+🐣 具象class[extends / implementsでもらう]（パシリ1年生）：完成品✨
+    → new ⭕️
+
+☘️────────☘️
+
 📛 override：同じ名札📛（メソッド名＋引数）の{}の中身を上書きすること
 
 📛 俺のメソッド📛：2段階👀
 
 📛 override：親 <= 子 / 戻り値は逆 親 >= 子
 
-📛 メソッド：上書き（override）😊
+📛 メソッド：上書き（override）
 
 📦 フィールド：同じ名前でも上書きしない（親子で別々）
 
@@ -92,7 +130,7 @@
 
 ☘️────────☘️
 
-⭐️ シグニチャ：メソッド名 + 引数の型の数と順番
+⭐️ シグニチャ：📛メソッド名 + 引数の型の数と順番
 
 ⭐️ 独立：一番外側のclass/record = public又は修飾子なし
 
@@ -149,7 +187,7 @@
 
 🚨 throws：RuntimeExceptionファミリー🐶🐶 → 書かなくていい😊
 
-💥 Error：JVM重大トラブル💣（catchはできる⭕、throws不要😊）
+🚨 Error：JVM重大トラブル💣（catchはできる⭕、throws不要😊）
 
 🚨 はみ出しList📋：get(0)👀 → IndexOutOfBoundsException💥
 
@@ -157,9 +195,13 @@
 
 🚨 はみ出しString🔤：charAt(0)👀 → StringIndexOutOfBoundsException💥
 
+☘️────────☘️
+
 ♾️ 無限再帰→ 自分を呼ぶ📛（main→main・test→test）→ StackOverflowError💥
 
 🈳 null.📛 👀：→ 左がnullなら瞬殺⭐️ぬるぽ💥
+
+☘️────────☘️
 
 🚨 catch複数例外：AException | BException（|は1本）
 
@@ -171,7 +213,10 @@
 
 🚨 try()：中の例外→close()→catch、close()後の例外はおまけ
 
+🚨 try()：目的＝自動close
+
+🚨 try()例外：close→catch→finally
+
 ☘️────────☘️
 
 🎭 equals内cast：(A)obj発見👀 → 中身✅違う犬❌ → ClassCastException💥
-
