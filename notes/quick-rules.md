@@ -1073,6 +1073,20 @@ args.length
 "
 ```
 
+## 🍴 javac（コンパイル＝作る）
+`javac -d 出力先 Sample.java`
+
+✅ javac → .javaを書く
+<br>
+✅ -d → classを作る時に使う
+
+## java（実行）
+`java -cp 場所 Sample`
+
+✅ java → クラス名を書く（.classなし）
+<br>
+✅ -cp → classを探す時に使う
+
 # ガベージコレクション
 
 ⭐️ 誰からも参照されないインスタンス
@@ -1440,9 +1454,9 @@ int → Integer ： オートボクシング
 Integer → int ： アンボクシング
 
 # リテラルの接尾辞（L / F）
-L：longの大きい数で必要
+L：longの大きい数で必要（ないとint扱い）
 <br>
-F：floatの小数で必要
+F：floatの小数で必要（ないとdouble扱い）
 
 ## protected
 同じパッケージ → OK
@@ -1523,8 +1537,9 @@ while(条件)
 # Silver最終兵器✏️
 
 問題を見る
+<br>
 ↓
-
+<br>
 何の問題？
 
 # _（アンダースコア）
@@ -1543,6 +1558,6 @@ while(条件)
 - cast
 - try-with-resources
 - static
-・instanceof
+- instanceof
 
 まずジャンルを探す👀

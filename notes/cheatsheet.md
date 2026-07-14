@@ -1669,6 +1669,42 @@ cいない👀
 
 `java Sample.java ⭕️`
 
+## ① -d（destination）：クラス指定（.java⭕️）
+### classファイルの保存場所を指定
+
+`javac -d 出力先 ソース.java`
+
+```
+// .classを現在の場所へ作る
+javac -d . Sample.java
+      ↑          ↑
+ 行き先指定    作りたいクラス.java
+```
+
+```
+javac
+↓
+コンパイルする
+
+-d .
+↓
+.classを置く場所は「今いる場所」
+
+Sample.java 👈 このファイルを指定
+↓
+材料（ソース）
+```
+
+## ② -cp / -classpath：置き場所のpath（.java❌）
+`java -cp 場所 クラス名`
+
+```
+// クラスを探す場所を指定
+java -cp . Sample
+             ↑
+          探す場所
+```
+
 # 型変換
 byte
  <br>
